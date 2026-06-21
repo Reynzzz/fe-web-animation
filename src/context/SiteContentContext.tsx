@@ -30,9 +30,17 @@ export function SiteContentProvider({ children }: { children: React.ReactNode })
       setSettings(content.settings || {});
       setItems(content.items || {});
       setProjects(proj || []);
+
+      // Signal to LoadingScreen that content is ready
+      (window as any).__siteContentReady = true;
+      window.dispatchEvent(new Event('site-content-ready'));
     } catch (err: any) {
       setError(err.message || 'Failed to load content');
       console.error(err);
+
+      // Even on error, signal readiness so LoadingScreen doesn't hang forever
+      (window as any).__siteContentReady = true;
+      window.dispatchEvent(new Event('site-content-ready'));
     } finally {
       setLoading(false);
     }

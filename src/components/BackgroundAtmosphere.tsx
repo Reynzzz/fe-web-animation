@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { Sphere, MeshDistortMaterial } from '@react-three/drei';
-import { EffectComposer, Bloom, ChromaticAberration } from '@react-three/postprocessing';
+import { EffectComposer, Bloom } from '@react-three/postprocessing';
 import * as THREE from 'three';
 import { useLocation } from 'react-router-dom';
 
@@ -34,11 +34,11 @@ function GradientMesh() {
 
   return (
     <group>
-      <Sphere args={[1.5, isMobile ? 32 : 64, isMobile ? 32 : 64]} ref={meshRef}>
+      <Sphere args={[1.5, isMobile ? 24 : 48, isMobile ? 24 : 48]} ref={meshRef}>
         <MeshDistortMaterial
           color="#111111"
-          speed={isMobile ? 1.5 : 2}
-          distort={0.4}
+          speed={isMobile ? 1.2 : 1.8}
+          distort={0.35}
           radius={1}
         />
       </Sphere>
@@ -58,6 +58,13 @@ export default function BackgroundAtmosphere() {
 
   const containerRef = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(true);
+  // Delay Canvas mount so it doesn't compete with initial page render
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setMounted(true), 500);
+    return () => clearTimeout(timer);
+  }, []);
 
   useEffect(() => {
     if (isHome) return;
@@ -79,11 +86,11 @@ export default function BackgroundAtmosphere() {
 
   return (
     <div ref={containerRef} className="fixed inset-0 pointer-events-none z-[-1] bg-[#050505]">
-      {!isHome && (
+      {!isHome && mounted && (
         <div className="absolute inset-0 opacity-60">
           <Canvas
             camera={{ position: [0, 0, 5], fov: 75 }}
-            dpr={isMobile ? 1.0 : 1.2}
+            dpr={1}
             gl={{ antialias: false, powerPreference: 'high-performance' }}
             frameloop={isVisible ? 'always' : 'never'}
           >
@@ -95,12 +102,9 @@ export default function BackgroundAtmosphere() {
               <Bloom
                 luminanceThreshold={0.2}
                 mipmapBlur
-                intensity={isMobile ? 0.25 : 0.4}
-                radius={0.4}
+                intensity={isMobile ? 0.2 : 0.3}
+                radius={0.3}
               />
-              {!isMobile && (
-                <ChromaticAberration offset={new THREE.Vector2(0.002, 0.002)} />
-              )}
             </EffectComposer>
           </Canvas>
         </div>

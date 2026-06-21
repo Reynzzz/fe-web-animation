@@ -1,4 +1,4 @@
-export const API_BASE = 'http://localhost:5000';
+export const API_BASE = 'http://103.150.92.197:5000';
 export const API_URL = `${API_BASE}/api`;
 
 export const resolveMediaUrl = (url?: string) => {

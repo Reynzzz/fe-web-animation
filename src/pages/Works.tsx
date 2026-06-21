@@ -26,23 +26,23 @@ export default function Works() {
   }, [projects]);
 
   return (
-    <main className="pt-40 pb-20 px-6 bg-[#050505] min-h-screen text-white">
+    <main className="pt-32 pb-16 px-4 sm:px-6 bg-[#050505] min-h-screen text-white">
       <div ref={containerRef} className="max-w-7xl mx-auto">
-        <h1 className="text-7xl md:text-[10rem] font-display font-bold tracking-tighter mb-20">
+        <h1 className="text-5xl sm:text-7xl md:text-[10rem] font-display font-bold tracking-tighter mb-10 md:mb-20">
           SELECTED <span className="text-white/20 italic">WORKS.</span>
         </h1>
 
         {loading ? (
-          <div className="flex items-center justify-center p-20">
-            <Loader2 className="w-10 h-10 animate-spin text-ayuta-pink" />
-            <span className="ml-4 font-display">Loading projects...</span>
+          <div className="flex items-center justify-center p-10 md:p-20">
+            <Loader2 className="w-8 h-8 md:w-10 md:h-10 animate-spin text-ayuta-pink" />
+            <span className="ml-4 font-display text-sm md:text-base">Loading projects...</span>
           </div>
         ) : projects.length === 0 ? (
-          <div className="text-center text-white/40 py-20 font-display">
+          <div className="text-center text-white/40 py-10 md:py-20 font-display text-sm md:text-base">
             No projects available yet.
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
             {projects.map((project) => (
               <Link 
                 key={project.id} 

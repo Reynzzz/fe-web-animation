@@ -15,7 +15,10 @@ export default function SmoothScroll({ children }: { children: React.ReactNode }
   const lenisRef = useRef<Lenis | null>(null);
 
   useEffect(() => {
-    if (prefersReducedMotion()) {
+    // Detect mobile/touch devices to avoid Lenis scroll locking issues on mobile
+    const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+
+    if (prefersReducedMotion() || isTouchDevice) {
       debouncedScrollRefresh(100);
       return;
     }

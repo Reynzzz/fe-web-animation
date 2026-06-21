@@ -187,11 +187,11 @@ export default function WorkDetail() {
         </div>
 
         <div className="hero-content absolute inset-0 flex flex-col items-center justify-center p-6 text-center">
-          <span className="text-ayuta-pink text-xs md:text-sm uppercase tracking-[0.6em] font-bold mb-8 opacity-60">
+          <span className="text-ayuta-pink text-xs md:text-sm uppercase tracking-[0.6em] font-bold mb-6 md:mb-8 opacity-60">
             {project.category} / {project.year}
           </span>
 
-          <h1 className="project-title text-[15vw] md:text-[12vw] font-display font-medium leading-[0.8] tracking-tighter flex flex-wrap justify-center overflow-hidden">
+          <h1 className="project-title text-[12vw] sm:text-[10vw] font-display font-medium leading-[0.9] tracking-tighter flex flex-wrap justify-center overflow-hidden">
             {project.title.split(" ").map((word, i) => (
               <span key={i} className="inline-block mr-[0.2em]">
                 {word}
@@ -200,31 +200,31 @@ export default function WorkDetail() {
           </h1>
         </div>
 
-        <div className="absolute bottom-12 left-12 right-12 flex justify-between items-end opacity-40">
-          <div className="text-[10px] uppercase tracking-[0.4em] font-bold">
+        <div className="absolute bottom-8 left-6 right-6 md:bottom-12 md:left-12 md:right-12 flex justify-between items-end opacity-40 text-[8px] sm:text-[10px]">
+          <div className="uppercase tracking-[0.4em] font-bold">
             Role: {project.role}
           </div>
 
-          <div className="text-[10px] uppercase tracking-[0.4em] font-bold">
+          <div className="uppercase tracking-[0.4em] font-bold">
             Client: {project.client}
           </div>
         </div>
       </section>
 
       {/* Info Section */}
-      <section className="py-40 px-6 max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-24 items-start">
+      <section className="py-20 md:py-40 px-4 sm:px-6 max-w-7xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-start">
           <div className="detail-stagger">
-            <h2 className="text-[10px] uppercase tracking-[0.5em] text-ayuta-pink font-bold mb-8">
+            <h2 className="text-[10px] uppercase tracking-[0.5em] text-ayuta-pink font-bold mb-6 md:mb-8">
               THE CHALLENGE
             </h2>
 
-            <p className="text-3xl md:text-5xl font-light leading-tight tracking-tight text-white/80">
+            <p className="text-2xl sm:text-3xl md:text-5xl font-light leading-tight tracking-tight text-white/80">
               {project.description}
             </p>
           </div>
 
-          <div className="grid grid-cols-2 gap-12 detail-stagger">
+          <div className="grid grid-cols-2 gap-8 md:gap-12 detail-stagger">
             {project.stats.map((stat, i) => {
               const numberValue = parseInt(stat.value);
               const suffix = stat.value.includes("M")
@@ -235,11 +235,11 @@ export default function WorkDetail() {
 
               return (
                 <div key={i}>
-                  <span className="text-[10px] uppercase tracking-[0.4em] text-white/30 block mb-6">
+                  <span className="text-[9px] sm:text-[10px] uppercase tracking-[0.4em] text-white/30 block mb-3 md:mb-6">
                     {stat.label}
                   </span>
 
-                  <div className="text-5xl md:text-7xl font-display font-medium italic">
+                  <div className="text-4xl sm:text-5xl md:text-7xl font-display font-medium italic">
                     <span
                       className="detail-stat-value"
                       data-value={numberValue}
@@ -256,7 +256,7 @@ export default function WorkDetail() {
       </section>
 
       {/* Fullscreen Sticky Image */}
-      <section className="h-screen relative overflow-hidden bg-white/5 border-y border-white/5 group">
+      <section className="h-[60vh] sm:h-screen relative overflow-hidden bg-white/5 border-y border-white/5 group">
         <motion.div
           initial={{ clipPath: "inset(10% 10% 10% 10%)" }}
           whileInView={{ clipPath: "inset(0% 0% 0% 0%)" }}
@@ -277,7 +277,7 @@ export default function WorkDetail() {
         <div className="absolute inset-0 bg-black/20 pointer-events-none" />
 
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center">
-          <h3 className="text-8xl md:text-[12rem] font-display font-bold tracking-tighter text-white/10 mix-blend-overlay">
+          <h3 className="text-6xl sm:text-8xl md:text-[12rem] font-display font-bold tracking-tighter text-white/10 mix-blend-overlay">
             PROCESS.
           </h3>
         </div>
@@ -286,11 +286,50 @@ export default function WorkDetail() {
       {/* Horizontal Gallery */}
       <section
         ref={horizontalContainerRef}
-        className="h-screen bg-[#050505] overflow-hidden"
+        className="h-auto md:h-screen bg-[#050505] overflow-hidden py-16 md:py-0"
       >
+        {/* Mobile View: Vertical list of gallery images */}
+        <div className="block md:hidden px-4 space-y-8">
+          <div className="flex flex-col gap-4 mb-8">
+            <h4 className="text-4xl font-display font-bold text-white/10 tracking-tighter">
+              GALLERY /
+            </h4>
+            <p className="text-base text-white/40 font-light">
+              We explored various textures and motion patterns to ensure the
+              brand felt alive across all touchpoints.
+            </p>
+          </div>
+
+          {project.gallery.slice(1).map((img, i) => (
+            <div
+              key={i}
+              className="w-full h-[40vh] rounded-[1.5rem] overflow-hidden border border-white/5 cinematic-shadow"
+            >
+              <img
+                src={resolveMediaUrl(img)}
+                alt={`Gallery ${i + 1}`}
+                loading="lazy"
+                decoding="async"
+                onLoad={() => debouncedScrollRefresh()}
+                className="w-full h-full object-cover grayscale"
+              />
+            </div>
+          ))}
+
+          <div className="flex flex-col items-center justify-center gap-4 py-8 text-center">
+            <span className="text-[9px] uppercase tracking-[0.8em] text-white/20">
+              Next Evolution
+            </span>
+            <h4 className="text-3xl italic font-light tracking-tighter">
+              FINISHING TOUCHES.
+            </h4>
+          </div>
+        </div>
+
+        {/* Desktop View: Horizontal scroll-driven gallery */}
         <div
           ref={horizontalRef}
-          className="flex h-full items-center px-[10vw] gap-[5vw] whitespace-nowrap"
+          className="hidden md:flex h-full items-center px-[10vw] gap-[5vw] whitespace-nowrap"
         >
           <div className="min-w-[40vw] flex flex-col gap-8">
             <h4 className="text-[8vw] font-display font-bold text-white/10 tracking-tighter">
@@ -332,21 +371,21 @@ export default function WorkDetail() {
       </section>
 
       {/* Footer / CTA */}
-      <section className="py-60 px-6 text-center relative overflow-hidden">
+      <section className="py-32 md:py-60 px-4 text-center relative overflow-hidden">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-ayuta-primary/20 blur-[150px] rounded-full pointer-events-none opacity-40" />
 
         <div className="relative z-10 flex flex-col items-center">
-          <h2 className="text-7xl md:text-[8rem] font-display font-medium tracking-tighter mb-16 leading-[0.9]">
+          <h2 className="text-5xl sm:text-7xl md:text-[8rem] font-display font-medium tracking-tighter mb-10 md:mb-16 leading-[0.9]">
             NEXT <br />
             <span className="italic font-light">PROJECT.</span>
           </h2>
 
           <MagneticButton
             onClick={() => navigate(`/works/${nextProject.slug}`)}
-            className="bg-[#F5F5F5] text-black border-none px-16 py-8 text-xl font-bold"
+            className="bg-[#F5F5F5] text-black border-none px-10 md:px-16 py-6 md:py-8 text-lg md:text-xl font-bold"
           >
             {nextProject.title}
-            <ArrowUpRight className="ml-2 w-6 h-6" />
+            <ArrowUpRight className="ml-2 w-5 h-5 md:w-6 md:h-6" />
           </MagneticButton>
         </div>
       </section>

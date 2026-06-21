@@ -79,20 +79,20 @@ export default function GroupSection() {
           </div>
         </div>
 
-        <div className="relative h-[700px] mt-12 lg:mt-0">
-          <div className="group-img-card absolute top-0 left-0 w-[45%] aspect-[3/4] rounded-2xl overflow-hidden z-10 cinematic-shadow rotate-[-2deg] transform-gpu border border-white/5 group">
+        <div className="relative h-[450px] sm:h-[600px] lg:h-[700px] mt-12 lg:mt-0">
+          <div className="group-img-card absolute top-0 left-0 w-[55%] sm:w-[45%] aspect-[3/4] rounded-2xl overflow-hidden z-10 cinematic-shadow rotate-[-2deg] transform-gpu border border-white/5 group">
             <img src={teamImages[0]} alt="Team" loading="lazy" decoding="async" className="w-full h-full object-cover grayscale brightness-50 hover:brightness-100 transition-all duration-700 hover:scale-105" />
             <div className="absolute bottom-4 left-4 right-4 p-4 glass-panel rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 backdrop-blur-md">
               <span className="text-[8px] uppercase tracking-widest text-[#F5F5F5] font-bold">Creative Vision</span>
             </div>
           </div>
-          <div className="group-img-card absolute bottom-10 right-0 w-[50%] aspect-[4/5] rounded-2xl overflow-hidden z-20 cinematic-shadow rotate-[3deg] transform-gpu border border-white/5 group">
+          <div className="group-img-card absolute bottom-5 sm:bottom-10 right-0 w-[58%] sm:w-[50%] aspect-[4/5] rounded-2xl overflow-hidden z-20 cinematic-shadow rotate-[3deg] transform-gpu border border-white/5 group">
             <img src={teamImages[1]} alt="Team" loading="lazy" decoding="async" className="w-full h-full object-cover grayscale brightness-50 hover:brightness-100 transition-all duration-700 hover:scale-105" />
             <div className="absolute bottom-4 left-4 right-4 p-4 glass-panel rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 backdrop-blur-md">
               <span className="text-[8px] uppercase tracking-widest text-[#F5F5F5] font-bold">Design Strategy</span>
             </div>
           </div>
-          <div className="group-img-card absolute top-[15%] right-[10%] w-[30%] aspect-square rounded-full overflow-hidden z-0 cinematic-shadow opacity-30 blur-[2px]">
+          <div className="group-img-card absolute top-[15%] right-[10%] w-[30%] aspect-square rounded-full overflow-hidden z-0 cinematic-shadow opacity-30 blur-[2px] hidden sm:block">
             <img src={teamImages[2]} alt="Team" loading="lazy" decoding="async" className="w-full h-full object-cover" />
           </div>
         </div>

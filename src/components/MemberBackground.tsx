@@ -7,15 +7,7 @@ import { cn } from "@/lib/utils";
 import { useSiteContent } from "@/context/SiteContentContext";
 import { resolveMediaUrl } from "@/lib/api";
 
-export default function ExpandOnHoverLamp() {
-  return (
-    <LampContainer>
-      <OurTeamGrid />
-    </LampContainer>
-  );
-}
-
-function OurTeamGrid() {
+export default function OurTeamGrid() {
   const { items } = useSiteContent();
 
   const members = (items.member || [])
@@ -30,48 +22,50 @@ function OurTeamGrid() {
   if (members.length === 0) return null;
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 70 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.2 }}
-      transition={{
-        duration: 0.8,
-        ease: [0.22, 1, 0.36, 1],
-      }}
-      className="relative z-20 w-full max-w-6xl px-4"
-    >
-      {/* HEADER */}
-      <div className="mb-10 text-center">
-        <motion.p
-          initial={{ opacity: 0, y: 12 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-xs font-medium uppercase tracking-[0.35em] text-white/40"
-        >
-          Our Team
-        </motion.p>
+    <section className="relative flex w-full flex-col items-center justify-center bg-[#0b0b0b] px-5 py-24 md:py-32">
+      <motion.div
+        initial={{ opacity: 0, y: 70 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.2 }}
+        transition={{
+          duration: 0.8,
+          ease: [0.22, 1, 0.36, 1],
+        }}
+        className="relative z-20 w-full max-w-6xl px-4"
+      >
+        {/* HEADER */}
+        <div className="mb-10 text-center">
+          <motion.p
+            initial={{ opacity: 0, y: 12 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-xs font-medium uppercase tracking-[0.35em] text-white/40"
+          >
+            Our Team
+          </motion.p>
 
-        <motion.h2
-          initial={{ opacity: 0, y: 18 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7, delay: 0.1 }}
-          className="mt-2 text-3xl font-semibold leading-tight text-white md:text-5xl"
-        >
-          Awesome team
-          <br />
-          members
-        </motion.h2>
-      </div>
+          <motion.h2
+            initial={{ opacity: 0, y: 18 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7, delay: 0.1 }}
+            className="mt-2 text-3xl font-semibold leading-tight text-white md:text-5xl"
+          >
+            Awesome team
+            <br />
+            members
+          </motion.h2>
+        </div>
 
-      {/* GRID */}
-      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-        {members.map((member: any, idx: number) => (
-          <TeamMemberCard key={member.id || `member-${idx}`} member={member} idx={idx} />
-        ))}
-      </div>
-    </motion.div>
+        {/* GRID */}
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          {members.map((member: any, idx: number) => (
+            <TeamMemberCard key={member.id || `member-${idx}`} member={member} idx={idx} />
+          ))}
+        </div>
+      </motion.div>
+    </section>
   );
 }
 
@@ -134,32 +128,3 @@ function TeamMemberCard({ member, idx }: { member: any; idx: number }) {
     </motion.div>
   );
 }
-
-export const LampContainer = ({
-  children,
-  className,
-}: {
-  children: React.ReactNode;
-  className?: string;
-}) => {
-  return (
-    <section
-      className={cn(
-        "relative flex min-h-screen w-full flex-col items-center overflow-hidden bg-[#0b0b0b]",
-        className
-      )}
-    >
-      {/* BACKGROUND EFFECT */}
-      <div className="pointer-events-none absolute inset-0">
-        <div className="absolute left-1/2 top-0 h-[28rem] w-[28rem] -translate-x-1/2 rounded-full bg-white/[0.04] blur-3xl" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.08),transparent_35%)]" />
-        <div className="absolute inset-0 bg-[linear-gradient(to_bottom,transparent,rgba(0,0,0,0.8))]" />
-      </div>
-
-      {/* CONTENT */}
-      <div className="relative z-20 flex w-full flex-1 flex-col items-center justify-center px-5 py-24 md:py-32">
-        {children}
-      </div>
-    </section>
-  );
-};

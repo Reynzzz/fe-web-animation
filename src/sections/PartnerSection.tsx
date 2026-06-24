@@ -1,5 +1,4 @@
 import React from 'react';
-import { motion } from 'motion/react';
 import { useSiteContent } from '@/context/SiteContentContext';
 import { resolveMediaUrl } from '@/lib/api';
 
@@ -9,45 +8,60 @@ export default function PartnerSection() {
 
   if (partners.length === 0) return null;
 
-  // Duplicate 4 times to guarantee full width coverage and seamless infinite looping
-  const duplicatedPartners = [...partners, ...partners, ...partners, ...partners];
+  // Memecah array partners menjadi kelompok-kelompok berisi 3 item (untuk grid baris)
+  const partnerRows = [];
+  for (let i = 0; i < partners.length; i += 3) {
+    partnerRows.push(partners.slice(i, i + 3));
+  }
 
   return (
-    <section className="py-24 bg-[#050505] overflow-hidden border-y border-white/5">
-      <div className="max-w-7xl mx-auto px-6 mb-12">
-        <h2 className="text-center font-display text-sm uppercase tracking-widest text-white/30">
-          Our Global Partners
-        </h2>
-      </div>
+    <section className="py-24 bg-[#050505] text-white overflow-hidden">
+      <div className="max-w-7xl mx-auto px-6">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-start">
+          
+          {/* Kolom Kiri: Teks & Deskripsi */}
+          <div className="lg:col-span-5 flex flex-col justify-start">
+            <span className="text-ayuta-pink text-xs tracking-[0.2em] uppercase mb-6 font-bold">
+              / Our Client
+            </span>
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-medium uppercase tracking-tight leading-[1.1] mb-6">
+              Brands<br />We Collaborate With
+            </h2>
+            <p className="text-white/50 text-sm md:text-base leading-relaxed max-w-md font-light">
+              We partner with forward-thinking brands and organizations
+              across industries to create meaningful experiences
+              that connect and make an impact.
+            </p>
+          </div>
 
-      <div className="relative w-full overflow-hidden flex items-center">
-        {/* Soft edge blur gradients for high-end look */}
-        <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-[#050505] to-transparent z-10 pointer-events-none" />
-        <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-[#050505] to-transparent z-10 pointer-events-none" />
-
-        <motion.div
-          className="flex whitespace-nowrap items-center select-none"
-          animate={{ x: ['0%', '-25%'] }}
-          transition={{
-            ease: 'linear',
-            duration: 20,
-            repeat: Infinity,
-          }}
-        >
-          {duplicatedPartners.map((partner, index) => (
-            <div
-              key={`${partner.id || index}-${index}`}
-              className="inline-block px-12 md:px-16 flex-shrink-0"
-            >
-              <img
-                src={resolveMediaUrl(partner.image)}
-                alt={partner.title || 'Partner Logo'}
-                className="h-8 md:h-12 w-auto object-contain opacity-25 hover:opacity-100 hover:scale-105 transition-all duration-300 filter brightness-0 invert"
-                draggable={false}
-              />
+          {/* Kolom Kanan: Grid Logo Klien */}
+          <div className="lg:col-span-7 mt-8 lg:mt-0">
+            <div className="flex flex-col border-t border-white/10">
+              {partnerRows.map((row, rowIndex) => (
+                <div 
+                  key={rowIndex} 
+                  className="grid grid-cols-2 md:grid-cols-3 border-b border-white/10"
+                >
+                  {row.map((partner, index) => (
+                    <div 
+                      key={partner.id || index} 
+                      className="flex items-center justify-center py-8 px-4"
+                    >
+                      <img
+                        src={resolveMediaUrl(partner.image)}
+                        alt={partner.title || 'Partner Logo'}
+                        loading="lazy"
+                        className="h-10 md:h-12 w-auto object-contain opacity-50 hover:opacity-100 hover:scale-105 transition-all duration-500 filter brightness-0 invert"
+                        draggable={false}
+                      />
+                    </div>
+                  ))}
+                </div>
+              ))}
             </div>
-          ))}
-        </motion.div>
+          </div>
+          
+        </div>
       </div>
     </section>
   );

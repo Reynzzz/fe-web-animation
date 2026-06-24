@@ -15,8 +15,7 @@ const japaneseWords = [
   '造形',
   '映像',
   '世界',
-  'クリエイティブ',
-  'デザイン',
+
 ];
 
 type WordData = {
@@ -162,7 +161,12 @@ export default function MonopoHero() {
       ease: 'power2.out',
     });
 
+    let activeWordsCount = 0;
+
     const resetWords = () => {
+      activeWordsCount = 0;
+      gsap.to(lens, { scale: 1, duration: 0.34, ease: 'power3.out' });
+
       wordsRef.current.forEach((wordData) => {
         const { wrapper, originalEl, jpEl, original } = wordData;
 
@@ -210,6 +214,12 @@ export default function MonopoHero() {
 
       if (!wordData.isActive) {
         wordData.isActive = true;
+        activeWordsCount++;
+
+        if (activeWordsCount === 1) {
+          gsap.to(lens, { scale: 1.8, duration: 0.28, ease: 'power3.out', overwrite: 'auto' });
+        }
+
         wordData.targetWord = getRandomJapaneseWord();
         jpEl.textContent = wordData.targetWord;
 
@@ -268,6 +278,11 @@ export default function MonopoHero() {
       if (!wordData.isActive) return;
 
       wordData.isActive = false;
+      activeWordsCount--;
+
+      if (activeWordsCount === 0) {
+        gsap.to(lens, { scale: 1, duration: 0.34, ease: 'power3.out', overwrite: 'auto' });
+      }
 
       gsap.killTweensOf([wrapper, originalEl, jpEl]);
 
@@ -479,10 +494,8 @@ export default function MonopoHero() {
 
       <div
         ref={lensRef}
-        className="pointer-events-none fixed left-0 top-0 z-40 h-[95px] w-[95px] -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-full border border-white/15 bg-[radial-gradient(circle_at_35%_28%,rgba(255,255,255,0.14),rgba(255,255,255,0.03)_28%,rgba(0,0,0,0.16)_60%,rgba(0,0,0,0.38)_100%)] opacity-0 shadow-[inset_10px_12px_24px_rgba(255,255,255,0.10),inset_-14px_-18px_32px_rgba(0,0,0,0.50),0_0_0_1px_rgba(255,255,255,0.05),0_16px_50px_rgba(0,0,0,0.42)] backdrop-blur-[8px] backdrop-saturate-[1.35] backdrop-contrast-[1.15] max-[900px]:h-[80px] max-[900px]:w-[80px]"
+        className="pointer-events-none fixed left-0 top-0 z-40 h-[95px] w-[95px] -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-full border-[1.5px] border-white/40 bg-transparent opacity-0 shadow-[inset_10px_12px_24px_rgba(255,255,255,0.10),0_16px_50px_rgba(0,0,0,0.42)] max-[900px]:h-[80px] max-[900px]:w-[80px]"
       >
-        <div className="absolute inset-[14%] rotate-[-18deg] rounded-full bg-[linear-gradient(90deg,rgba(241,95,165,0.20),rgba(119,91,164,0.20),rgba(72,77,162,0.18),rgba(245,245,245,0.08))] opacity-60 blur-[7px]" />
-        <div className="absolute left-[18%] top-[14%] h-[16%] w-[28%] rotate-[-20deg] rounded-full bg-white/15 blur-[8px]" />
       </div>
     </section>
   );

@@ -16,8 +16,8 @@ export default function Home() {
       <AboutOverviewSection />
       <WorksSection />
       <PhilosophySection />
-      <GroupSection />
-      <AchievementSection />
+      {/* <GroupSection /> */}
+      {/* <AchievementSection /> */}
    
     </main>
   );

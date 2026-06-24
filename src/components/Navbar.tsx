@@ -5,6 +5,7 @@ import { useState } from 'react';
 import MainLogo from '@/assets/Main_Logo.png';
 const NAV_LINKS = [
   { label: 'About', path: '/about' },
+  { label: 'Services', path: '/services' },
   { label: 'Work', path: '/works' },
   { label: 'Contact', path: '/contact' },
 ];

@@ -39,7 +39,7 @@ export default function HeroSection() {
       if (!rafId) rafId = requestAnimationFrame(moveGlow);
     };
 
-    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('mousemove', handleMouseMove, { passive: true });
 
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({

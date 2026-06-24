@@ -3,61 +3,48 @@
 import React, { useEffect, useMemo, useRef, useState, memo } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-import ZoomParallax from "@/components/ZoomParallax";
-import ExpandOnHoverLamp from "@/components/MemberBackground";
 import PartnerSection from "@/sections/PartnerSection";
 import { useSiteContent } from "@/context/SiteContentContext";
 import { resolveMediaUrl } from "@/lib/api";
+import { ArrowUpRight } from "lucide-react";
 
 gsap.registerPlugin(ScrollTrigger);
 
-type AboutValue = {
-  id?: string | number;
-  title?: string;
-  body?: string;
+// Data structure updated based on the image content
+type TeamMember = {
+  id: string | number;
+  name: string;
+  role: string;
+  image: string;
 };
 
-type ParallaxImage = {
-  src: string;
-  alt: string;
-};
+// TriangleSVG helper for visual indicators
+const TriangleSVG = ({ className }: { className?: string }) => (
+  <svg
+    width="13"
+    height="12"
+    viewBox="0 0 13 12"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    className={className}
+  >
+    <path d="M6.5 0L12.9952 11.25H0.00480938L6.5 0Z" fill="currentColor" />
+  </svg>
+);
 
 export default function About() {
   const containerRef = useRef<HTMLDivElement>(null);
   const { items } = useSiteContent();
 
-  const [isHeroLoaded, setIsHeroLoaded] = useState(false);
-
-  const values = useMemo<AboutValue[]>(() => {
-    return Array.isArray(items.about_value) ? items.about_value : [];
-  }, [items.about_value]);
-
-  const parallaxImages = useMemo<ParallaxImage[]>(() => {
-    if (!Array.isArray(items.about_parallax)) return [];
-
-    return items.about_parallax
-      .map((item: any) => {
-        const src = resolveMediaUrl(item.image);
-
-        return {
-          src,
-          alt: item.metadata?.alt || item.title || "About image",
-        };
-      })
-      .filter((item) => Boolean(item.src))
-      // ZoomParallax's layout positions are hand-tuned for exactly 7
-      // slots (index 0-6). Anything beyond that loops back via
-      // `index % scales.length` inside ZoomParallax and stacks extra
-      // motion.div + useTransform scroll listeners on top of the
-      // existing 7, with no extra layout room for them — pure added
-      // scroll-tracking cost with a visually broken result. Cap here.
-      .slice(0, 7);
-  }, [items.about_parallax]);
-
-  const heroImage = parallaxImages[0]?.src;
-  const hasTeamSection = Array.isArray(items.member) && items.member.length > 0;
-  const hasParallaxSection = parallaxImages.length > 0;
+  const teamMembers = useMemo<TeamMember[]>(() => {
+    if (!Array.isArray(items.member)) return [];
+    return items.member.map((item) => ({
+      id: item.id || `member-${item.slug}`,
+      name: item.name,
+      role: item.role,
+      image: resolveMediaUrl(item.image),
+    }));
+  }, [items.member]);
 
   useEffect(() => {
     if (!containerRef.current) return;
@@ -87,14 +74,9 @@ export default function About() {
     return () => {
       ctx.revert();
     };
-  }, [values.length, parallaxImages.length, hasTeamSection, hasParallaxSection]);
+  }, [teamMembers.length]); // Only refresh on data load
 
-  // Refresh ScrollTrigger once content/images are likely settled, instead
-  // of repeatedly: refresh() is a full re-measure of every ScrollTrigger
-  // on the page, and calling it 4x in the first 1.5s on top of whatever
-  // ZoomParallax/ExpandOnHoverLamp register themselves compounds fast as
-  // more triggers exist further down the page — this was the main reason
-  // scroll lag got worse the further down you scrolled.
+  // Perf: Refesh ScrollTrigger on image load for stable measurements
   useEffect(() => {
     let cancelled = false;
 
@@ -102,12 +84,7 @@ export default function About() {
       if (!cancelled) ScrollTrigger.refresh();
     };
 
-    // Wait for images to finish loading (or fail) rather than guessing
-    // with fixed timeouts. Falls back to a single delayed refresh if
-    // there are no images to wait on.
-    const imgs = Array.from(
-      containerRef.current?.querySelectorAll("img") ?? []
-    );
+    const imgs = Array.from(containerRef.current?.querySelectorAll("img") ?? []);
 
     if (imgs.length === 0) {
       const t = setTimeout(refreshOnce, 300);
@@ -132,7 +109,6 @@ export default function About() {
       }
     });
 
-    // Safety net in case some image neither loads nor errors in time.
     const failSafe = setTimeout(refreshOnce, 2000);
 
     return () => {
@@ -143,106 +119,96 @@ export default function About() {
         img.removeEventListener("error", onDone);
       });
     };
-  }, [values.length, parallaxImages.length, hasTeamSection, hasParallaxSection]);
+  }, [teamMembers.length]);
 
   return (
-    <main ref={containerRef} className="bg-black px-6 pb-20 pt-32 md:pt-40">
-        <div className="mx-auto max-w-7xl">
-          <section className="mb-28 md:mb-40">
-            <h1 className="about-stagger mb-10 font-display text-6xl font-bold leading-none tracking-tighter text-white sm:text-7xl md:mb-12 md:text-[12rem]">
-              OUR <br />
-              <span className="bg-gradient-to-r from-ayuta-pink to-ayuta-primary bg-clip-text italic text-transparent">
-                ESSENCE.
-              </span>
-            </h1>
+    <main ref={containerRef} className="bg-black pt-32 md:pt-40">
+      {/* 1. Header Section - updated style like Arino image_da506e.png header */}
+      <div className="mx-auto max-w-7xl px-6">
+        <section className="about-stagger mb-16 text-center md:mb-20">
+          <h1 className="font-display text-5xl font-bold tracking-tighter text-white sm:text-6xl md:text-7xl">
+            Our Team
+          </h1>
+          <nav className="text-white/60 text-sm md:text-base mt-2 flex items-center justify-center gap-2">
+           
+            {/* <span className="text-ayuta-pink font-bold">OUR TEAM</span> */}
+          </nav>
+        </section>
 
-            <div className="grid grid-cols-1 items-end gap-10 md:grid-cols-2 md:gap-20">
-              <p className="about-stagger max-w-2xl text-xl font-light leading-relaxed text-white/60 md:text-2xl">
-                AYUTA is a Tokyo-based digital creative agency. Since 2024,
-                we've been redefining how humans interact with brands through
-                cinematic digital art.
-              </p>
+        {/* 2. Intro Section - updated styling for "Awesome team members" */}
+        <section className="about-stagger max-w-2xl mx-auto mb-20 text-center md:mb-28">
+         
+          <h2 className="mt-4 font-display text-4xl font-semibold leading-tight text-white md:text-5xl">
+            Awesome team members
+          </h2>
+        </section>
 
-              {heroImage && (
-                <div className="about-stagger relative aspect-video overflow-hidden rounded-3xl bg-white/[0.04]">
-                  {!isHeroLoaded && (
-                    <div className="absolute inset-0 animate-pulse bg-white/[0.06]" />
-                  )}
-
+        {/* 3. Team Grid - repurposed to display member portraits with grayscale and hover effects */}
+        {teamMembers.length > 0 && (
+          <section className="mb-28 md:mb-40 grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 md:gap-8">
+            {teamMembers.map((member, i) => (
+              <article
+                key={member.id}
+                className="about-stagger group relative overflow-hidden rounded-3xl border border-white/10 bg-white/[0.04] p-6 backdrop-blur-md"
+              >
+                <div className="absolute inset-0 bg-ayuta-primary opacity-0 transition-opacity duration-500 group-hover:opacity-10" />
+                <div className="relative z-10 aspect-square overflow-hidden rounded-2xl bg-white/[0.06] mb-5">
                   <img
-                    src={heroImage}
-                    alt="Studio"
-                    loading="eager"
-                    decoding="async"
-                    fetchPriority="high"
-                    onLoad={() => setIsHeroLoaded(true)}
-                    className={[
-                      "h-full w-full object-cover grayscale transition-all duration-700",
-                      isHeroLoaded
-                        ? "opacity-100 blur-0"
-                        : "opacity-0 blur-md",
-                    ].join(" ")}
+                    src={member.image}
+                    alt={member.name}
+                    loading="lazy"
+                    className="h-full w-full object-cover grayscale transition-transform duration-500 group-hover:scale-105"
                   />
                 </div>
-              )}
-            </div>
+                <div className="relative z-10 text-center">
+                  <h3 className="mb-2 text-xl font-bold text-white">
+                    {member.name || "Untitled"}
+                  </h3>
+                  <p className="leading-relaxed text-white/45 text-sm">
+                    {member.role || ""}
+                  </p>
+                </div>
+              </article>
+            ))}
           </section>
+        )}
+      </div>
 
-          {values.length > 0 && <CorePhilosophy values={values} />}
+      {/* 4. CTA SECTION - full width section with background, graphic and link, using user color logic */}
+    
+
+      {/* 5. Partner Section - retained below the main photo content area */}
+      <PartnerSection />
+        <section className="w-full bg-[#080808] border-t border-white/5 py-24 relative px-6">
+        {/* Replace red triangle indicators with pink ones */}
+        <div className="absolute left-1/4 top-1/4 -translate-x-1/2 -translate-y-1/2 opacity-60">
+          <TriangleSVG className="w-3 h-3 text-ayuta-pink" />
+        </div>
+        <div className="absolute right-1/4 top-1/2 translate-x-1/2 -translate-y-1/2 opacity-60">
+          <TriangleSVG className="w-3 h-3 text-ayuta-pink" />
+        </div>
+        <div className="absolute left-1/2 bottom-1/4 -translate-x-1/2 translate-y-1/2 opacity-60">
+          <TriangleSVG className="w-3 h-3 text-ayuta-pink" />
         </div>
 
-        {hasTeamSection && (
-          <section className="w-full">
-            <ExpandOnHoverLamp />
-          </section>
-        )}
-     <PartnerSection />
-        {hasParallaxSection && (
-          <section className="relative w-full">
-            <ZoomParallax images={parallaxImages} />
-          </section>
-        )}
-
-   
-      </main>
+        <div className="about-stagger mx-auto max-w-4xl text-center">
+          <h2 className="mb-10 font-display text-4xl font-medium leading-snug tracking-tighter text-white sm:text-5xl md:text-6xl">
+            Let's disscuse make <br /> something{" "}
+            <span className="bg-gradient-to-r from-ayuta-pink to-ayuta-primary bg-clip-text italic text-transparent">
+              cool
+            </span>{" "}
+            together
+          </h2>
+          {/* Link uses pink and tracking updated */}
+          <a
+            href="#"
+            className="group inline-flex items-center gap-2.5 text-ayuta-pink text-sm uppercase font-bold tracking-[0.3em] hover:text-white transition-colors"
+          >
+            Apply For Meeting
+            <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+          </a>
+        </div>
+      </section>
+    </main>
   );
 }
-
-const CorePhilosophy = memo(function CorePhilosophy({
-  values,
-}: {
-  values: AboutValue[];
-}) {
-  return (
-    <section className="mb-28 md:mb-40">
-      <h2 className="about-stagger mb-12 text-center font-display text-3xl text-white md:mb-20 md:text-4xl">
-        Core Philosophy
-      </h2>
-
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-8 lg:grid-cols-4">
-        {values.map((val, i) => (
-          <article
-            key={val.id || `about-value-${i}`}
-            className="about-stagger group relative overflow-hidden rounded-3xl border border-white/10 bg-white/[0.04] p-7 backdrop-blur-md md:p-8"
-          >
-            <div className="absolute inset-0 bg-ayuta-primary opacity-0 transition-opacity duration-500 group-hover:opacity-10" />
-
-            <div className="relative z-10">
-              <div className="mb-4 font-display text-4xl text-ayuta-pink">
-                {String(i + 1).padStart(2, "0")}
-              </div>
-
-              <h3 className="mb-4 text-2xl font-bold text-white">
-                {val.title || "Untitled"}
-              </h3>
-
-              <p className="leading-relaxed text-white/45">
-                {val.body || ""}
-              </p>
-            </div>
-          </article>
-        ))}
-      </div>
-    </section>
-  );
-});

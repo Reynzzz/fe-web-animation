@@ -42,40 +42,54 @@ export default function Works() {
             No projects available yet.
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
-            {projects.map((project) => (
-              <Link 
-                key={project.id} 
-                to={`/works/${project.slug}`}
-                className="work-item group cursor-pointer interactive"
-              >
-                <div className="relative aspect-[4/3] rounded-[2rem] overflow-hidden mb-6 border border-white/5 cinematic-shadow">
-                  <img 
-                    src={resolveMediaUrl(project.heroImage)} 
-                    alt={project.title} 
-                    loading="lazy"
-                    decoding="async"
-                    className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000 scale-100 group-hover:scale-105" 
-                  />
-                  <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center backdrop-blur-[2px]">
-                    <div className="flex flex-col items-center gap-4">
-                      <div className="w-16 h-16 rounded-full bg-white text-black flex items-center justify-center scale-75 group-hover:scale-100 transition-transform duration-500">
-                        <ArrowUpRight className="w-6 h-6" />
-                      </div>
-                      <span className="text-[10px] uppercase tracking-[0.4em] font-bold text-white">View Project</span>
-                    </div>
-                  </div>
-                </div>
-                <div className="flex justify-between items-center">
-                  <div>
-                    <span className="text-ayuta-pink text-[10px] uppercase tracking-[0.4em] font-bold block mb-2">{project.category}</span>
-                    <h3 className="text-4xl font-display font-medium tracking-tight">{project.title}</h3>
-                  </div>
-                  <span className="text-white/20 font-display italic text-2xl">{project.year}</span>
-                </div>
-              </Link>
-            ))}
+       <div className="grid grid-cols-2 gap-3 md:gap-5">
+  {projects.map((project) => (
+    <Link 
+      key={project.id} 
+      to={`/works/${project.slug}`}
+      className="work-item group cursor-pointer interactive"
+    >
+     
+
+      {/* UBAH DI SINI: aspect-[3/4] diganti jadi aspect-[4/3] atau aspect-square agar lebih pendek */}
+      <div className="relative aspect-[4/3] overflow-hidden mb-3 border border-white/5 cinematic-shadow">
+        <img 
+          src={resolveMediaUrl(project.heroImage)} 
+          alt={project.title} 
+          loading="lazy"
+          decoding="async"
+          className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000 scale-100 group-hover:scale-105" 
+        />
+        <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center backdrop-blur-[2px]">
+          <div className="flex flex-col items-center gap-2">
+            {/* Tombol view diperkecil sedikit */}
+            <div className="w-10 h-10 rounded-full bg-white text-black flex items-center justify-center scale-75 group-hover:scale-100 transition-transform duration-500">
+              <ArrowUpRight className="w-4 h-4" />
+            </div>
+            <span className="text-[8px] md:text-[9px] uppercase tracking-[0.3em] font-bold text-white">
+              View
+            </span>
           </div>
+        </div>
+      </div>
+         <div className="border-t border-ayuta-pink pt-2 mb-2 flex items-center gap-1.5">
+        <span className="text-ayuta-pink text-[10px]">▸</span>
+        <span className="text-ayuta-pink text-[9px] uppercase tracking-[0.3em] font-bold">
+          {project.category}
+        </span>
+      </div>
+      <div className="flex justify-between items-start">
+        {/* Ukuran teks judul diperkecil sedikit */}
+        <h3 className="text-lg md:text-xl font-display font-medium uppercase tracking-tight leading-tight max-w-[80%]">
+          {project.title}
+        </h3>
+        <span className="text-white/20 font-display italic text-sm md:text-base shrink-0">
+          {project.year}
+        </span>
+      </div>
+    </Link>
+  ))}
+</div>
         )}
       </div>
     </main>

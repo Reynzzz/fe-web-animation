@@ -85,11 +85,7 @@ export default function LoadingScreen() {
             </div>
 
             <div className="flex justify-between items-center text-[8px] md:text-[10px] uppercase tracking-[0.4em] text-white/30">
-              <div className="flex gap-4">
-                <span>EST: 2024</span>
-                <span className="text-ayuta-pink">•</span>
-                <span>TOKYO / LONDON</span>
-              </div>
+         
               <div className="font-mono text-[#F5F5F5]">
                 {Math.min(progress, 100).toString().padStart(3, '0')}%
               </div>

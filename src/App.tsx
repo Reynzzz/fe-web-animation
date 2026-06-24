@@ -9,10 +9,10 @@
   // Lazy load pages for better performance (Code Splitting)
   const Home = lazy(() => import('./pages/Home'));
   const About = lazy(() => import('./pages/About'));
+  const Services = lazy(() => import('./pages/Services'));
   const Works = lazy(() => import('./pages/Works'));
   const WorkDetail = lazy(() => import('./pages/WorkDetail'));
   const Contact = lazy(() => import('./pages/Contact'));
-
 
   function PageLoader() {
     return (
@@ -38,6 +38,7 @@
                 <Route path="works" element={<Works />} />
                 <Route path="works/:slug" element={<WorkDetail />} />
                 <Route path="about" element={<About />} />
+                <Route path="services" element={<Services />} />
                 <Route path="contact" element={<Contact />} />
               </Route>
             </Routes>

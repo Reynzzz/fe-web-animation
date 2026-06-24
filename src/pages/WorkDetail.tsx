@@ -345,7 +345,7 @@ export default function WorkDetail() {
           {project.gallery.slice(1).map((img, i) => (
             <div
               key={i}
-              className="min-w-[60vw] h-[70vh] rounded-[2.5rem] overflow-hidden border border-white/5 cinematic-shadow"
+              className="min-w-[60vw] h-[70vh]  overflow-hidden border border-white/5 cinematic-shadow"
             >
               <img
                 src={resolveMediaUrl(img)}

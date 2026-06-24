@@ -1,135 +1,183 @@
 import React from "react";
-import { Instagram, Linkedin, Youtube, MessageCircle } from "lucide-react";
+import { ArrowUpRight, ChevronRight } from "lucide-react";
 import { Link } from "react-router-dom";
 
 export default function Footer() {
   return (
-    <footer className="bg-[#17171b] text-white relative overflow-hidden px-5 md:px-8 pt-16 pb-6">
-      <div className="max-w-6xl mx-auto relative z-10">
-        {/* TOP CONTENT */}
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-10 xl:gap-14 pb-14">
-          {/* BRAND */}
-          <div className="relative">
-            <Link
-              to="/"
-              className="text-3xl md:text-4xl font-black tracking-tighter mb-8 block"
-            >
-              <span className="bg-gradient-to-r from-blue-600 via-purple-500 to-pink-500 bg-clip-text text-transparent">
-                AYUTA
-              </span>
-            </Link>
+    <footer className="bg-[#111114] text-white px-5 md:px-8 pt-16 pb-8">
+      <div className="max-w-6xl mx-auto">
+        <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-14">
+          {/* LEFT: HEADLINE + EMAIL */}
+          <div className="lg:pt-1">
+            <h2 className="text-4xl md:text-6xl font-extralight leading-[1.05] tracking-tight">
+              READY WHEN
+              <br />
+              YOU ARE.
+            </h2>
+            <p className="text-white/60 text-base md:text-lg mt-4">
+              Let&apos;s talk about what&apos;s next.
+            </p>
 
-            <div className="flex items-start gap-4">
-              <p className="text-white/80 text-base md:text-lg leading-relaxed max-w-sm">
-                Ayuta Samarthya has long been at the forefront of creating
-                change and helping companies to leverage their brand campaign
-                through our unique approaches.
+            <a
+              href="mailto:mail@ayuta.id"
+              className="group inline-flex items-center gap-2 text-xl md:text-2xl font-semibold whitespace-nowrap hover:text-[#d154b8] transition-colors mt-8"
+            >
+              mail@ayuta.id
+              <ArrowUpRight className="w-5 h-5 md:w-6 md:h-6 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
+            </a>
+          </div>
+
+          {/* RIGHT: ADDRESS / FOLLOW / NAV */}
+          <div className="flex flex-col sm:flex-row gap-10 sm:gap-14 md:gap-20">
+            {/* OUR ADDRESS */}
+            <div>
+              <h4 className="text-xs font-bold tracking-widest text-white/50 uppercase mb-4">
+                Our Address
+              </h4>
+              <p className="text-white/80 text-sm leading-relaxed">
+                Rukan Permata Senayan
+                <br />
+                Jl. Tentara Pelajar No.16
+                <br />
+                Blok C No.15
+                <br />
+                RT.1/RW.7, Grogol Utara
+                <br />
+                Kebayoran Lama
+                <br />
+                South Jakarta
+              </p>
+
+              <h4 className="text-xs font-bold tracking-widest text-white/50 uppercase mt-8 mb-3">
+                Phone
+              </h4>
+              <p className="text-white/80 text-sm leading-relaxed">
+                (021) 470 6434
+                <br />
+                (021) 470 6435
               </p>
             </div>
-          </div>
 
-          {/* OFFICE */}
-          <div>
-            <h4 className="text-lg font-bold mb-5">Head Office</h4>
+            {/* FOLLOW US */}
+            <div>
+              <h4 className="text-xs font-bold tracking-widest text-white/50 uppercase mb-4">
+                Follow Us
+              </h4>
 
-            <p className="text-white/80 text-base leading-relaxed mb-10">
-              Jl. Taman Betok No 20, Jati,
-              <br />
-              Pulo Gadung Jakarta Timur,
-              <br />
-              DKI Jakarta 13220
-            </p>
+              <ul className="space-y-4">
+                <li>
+                  <a
+                    href="https://instagram.com/ayuta.id"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group flex items-start gap-2 text-white/80 hover:text-[#d154b8] transition-colors"
+                  >
+                    <ArrowUpRight className="w-4 h-4 mt-0.5 shrink-0 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                    <span className="text-sm leading-relaxed">
+                      Instagram
+                      <br />
+                      @ayuta.id
+                    </span>
+                  </a>
+                </li>
 
-            <h4 className="text-lg font-bold mb-5">Marketing Office</h4>
+                <li>
+                  <a
+                    href="https://youtube.com/@ayutasamarthya"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group flex items-start gap-2 text-white/80 hover:text-[#d154b8] transition-colors"
+                  >
+                    <ArrowUpRight className="w-4 h-4 mt-0.5 shrink-0 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                    <span className="text-sm leading-relaxed">
+                      YouTube
+                      <br />
+                      ayutasamarthya
+                    </span>
+                  </a>
+                </li>
 
-            <p className="text-white/80 text-base leading-relaxed">
-              Jl. Cikini I No 5 Menteng,
-              <br />
-              Jakarta Pusat, DKI Jakarta 10330
-            </p>
-          </div>
-
-          {/* INQUIRIES */}
-          <div>
-            <h4 className="text-lg font-bold mb-5">Work inquiries</h4>
-
-            <p className="text-white/80 text-base leading-relaxed mb-10">
-              Interested in working with us?
-              <br />
-
-              <a
-                href="mailto:mail@ayuta.id"
-                className="font-semibold hover:text-[#d154b8] transition-colors"
-              >
-                mail@ayuta.id
-              </a>
-            </p>
-
-            <h4 className="text-lg font-bold mb-5">Phone</h4>
-
-            <div className="text-white/80 text-base leading-relaxed font-semibold space-y-1">
-              <p>(021) 470 6434</p>
-              <p>(021) 470 6435</p>
-            </div>
-          </div>
-
-          {/* BROCHURE */}
-          <div>
-            <h4 className="text-lg font-bold mb-5">
-              Company Profile Brochure
-            </h4>
-
-            <p className="text-white/80 text-base leading-relaxed mb-6">
-              Download our Company Profile to understand and connect with us for
-              possible synergy.
-            </p>
-
-            <div className="text-base font-semibold mb-10 flex flex-wrap gap-2">
-              <a
-                href="#"
-                className="text-[#d154b8] hover:text-white transition-colors"
-              >
-                Company Profile
-              </a>
-
-              <span className="text-white/50">|</span>
-
-              <a
-                href="#"
-                className="text-[#d154b8] hover:text-white transition-colors"
-              >
-                Company Video
-              </a>
+                <li>
+                  <a
+                    href="https://linkedin.com/company/ayuta-samarthya"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group flex items-start gap-2 text-white/80 hover:text-[#d154b8] transition-colors"
+                  >
+                    <ArrowUpRight className="w-4 h-4 mt-0.5 shrink-0 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                    <span className="text-sm leading-relaxed">
+                      LinkedIn
+                      <br />
+                      Ayuta Samarthya
+                    </span>
+                  </a>
+                </li>
+              </ul>
             </div>
 
-            <h4 className="text-lg font-bold mb-5">
-              For More Information
-            </h4>
-
-            <div className="flex flex-wrap gap-3">
-              {[
-                { Icon: Instagram, href: "#" },
-                { Icon: Linkedin, href: "#" },
-                { Icon: Youtube, href: "#" },
-                { Icon: MessageCircle, href: "#" },
-              ].map(({ Icon, href }, i) => (
-                <a
-                  key={i}
-                  href={href}
-                  className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center hover:bg-[#d154b8] hover:border-[#d154b8] transition-all duration-300"
-                >
-                  <Icon className="w-5 h-5" />
-                </a>
-              ))}
+            {/* NAV */}
+            <div>
+              <ul className="space-y-3">
+                <li>
+                  <Link
+                    to="/"
+                    className="group inline-flex items-center gap-1.5 text-sm font-semibold text-white hover:text-[#d154b8] transition-colors"
+                  >
+                    <ChevronRight className="w-3.5 h-3.5 text-[#d154b8]" />
+                    Home
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/works"
+                    className="text-sm font-semibold text-white/80 hover:text-[#d154b8] transition-colors"
+                  >
+                    Work
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/services"
+                    className="text-sm font-semibold text-white/80 hover:text-[#d154b8] transition-colors"
+                  >
+                    Services
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/about"
+                    className="text-sm font-semibold text-white/80 hover:text-[#d154b8] transition-colors"
+                  >
+                    Team
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/contact"
+                    className="text-sm font-semibold text-white/80 hover:text-[#d154b8] transition-colors"
+                  >
+                    Contact
+                  </Link>
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    className="text-sm font-semibold text-white/80 hover:text-[#d154b8] transition-colors"
+                  >
+                    Press &amp; News
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    className="text-sm font-semibold text-white/80 hover:text-[#d154b8] transition-colors"
+                  >
+                    Privacy Policy
+                  </a>
+                </li>
+              </ul>
             </div>
           </div>
-        </div>
-
-        {/* BOTTOM */}
-        <div className="border-t border-white/10 pt-6 flex flex-col md:flex-row justify-between items-center gap-4 text-white/60 text-sm">
-          <p>© 2020 PT. Ayuta Samarthya</p>
-
-          <p>All right reserved.</p>
         </div>
       </div>
     </footer>

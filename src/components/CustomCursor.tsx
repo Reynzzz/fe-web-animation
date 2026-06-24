@@ -9,23 +9,45 @@ export default function CustomCursor() {
   const mouseY = useSpring(0, { stiffness: 400, damping: 28 });
 
   useEffect(() => {
+    let animationFrameId: number;
     const handleMouseMove = (e: MouseEvent) => {
-      mouseX.set(e.clientX);
-      mouseY.set(e.clientY);
-      
+      // Use requestAnimationFrame for smoother performance and less redundant state sets
+      cancelAnimationFrame(animationFrameId);
+      animationFrameId = requestAnimationFrame(() => {
+        mouseX.set(e.clientX);
+        mouseY.set(e.clientY);
+      });
+    };
+
+    // Use event delegation for hover states instead of checking on every mousemove
+    const handleMouseOver = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
-      setIsHovered(!!target.closest('button, a, .interactive'));
+      if (target.closest('button, a, .interactive')) {
+        setIsHovered(true);
+      }
+    };
+
+    const handleMouseOut = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      if (target.closest('button, a, .interactive')) {
+        setIsHovered(false);
+      }
     };
 
     const handleMouseEnter = () => setIsHidden(false);
     const handleMouseLeave = () => setIsHidden(true);
 
-    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('mousemove', handleMouseMove, { passive: true });
+    window.addEventListener('mouseover', handleMouseOver, { passive: true });
+    window.addEventListener('mouseout', handleMouseOut, { passive: true });
     window.addEventListener('mouseenter', handleMouseEnter);
     window.addEventListener('mouseleave', handleMouseLeave);
 
     return () => {
+      cancelAnimationFrame(animationFrameId);
       window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('mouseover', handleMouseOver);
+      window.removeEventListener('mouseout', handleMouseOut);
       window.removeEventListener('mouseenter', handleMouseEnter);
       window.removeEventListener('mouseleave', handleMouseLeave);
     };
@@ -33,7 +55,7 @@ export default function CustomCursor() {
 
   return (
     <motion.div
-      className="fixed top-0 left-0 w-8 h-8 pointer-events-none z-[100] mix-blend-difference"
+      className="fixed top-0 left-0 w-8 h-8 pointer-events-none z-[100]"
       style={{
         x: mouseX,
         y: mouseY,
@@ -43,7 +65,9 @@ export default function CustomCursor() {
       }}
     >
       <motion.div
-        className="w-full h-full rounded-full bg-white"
+        className={`w-full h-full rounded-full transition-colors duration-200 ${
+          isHovered ? 'bg-transparent border-[1.5px] border-white' : 'bg-white'
+        }`}
         animate={{
           scale: isHovered ? 2.5 : 1,
         }}

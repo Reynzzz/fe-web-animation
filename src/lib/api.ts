@@ -17,3 +17,9 @@ export async function fetchSiteContent() {
   if (!res.ok) throw new Error('Failed to fetch site content');
   return res.json();
 }
+
+export async function fetchServices() {
+  const res = await fetch(`${API_URL}/services`);
+  if (!res.ok) throw new Error('Failed to fetch services');
+  return res.json();
+}

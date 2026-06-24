@@ -10,14 +10,21 @@ function GradientMesh() {
   const mouse = useRef({ x: 0, y: 0 });
 
   React.useEffect(() => {
+    let animationFrameId: number;
     const handleMouseMove = (e: MouseEvent) => {
-      mouse.current = {
-        x: (e.clientX / window.innerWidth) * 2 - 1,
-        y: -(e.clientY / window.innerHeight) * 2 + 1,
-      };
+      cancelAnimationFrame(animationFrameId);
+      animationFrameId = requestAnimationFrame(() => {
+        mouse.current = {
+          x: (e.clientX / window.innerWidth) * 2 - 1,
+          y: -(e.clientY / window.innerHeight) * 2 + 1,
+        };
+      });
     };
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
+    window.addEventListener('mousemove', handleMouseMove, { passive: true });
+    return () => {
+      cancelAnimationFrame(animationFrameId);
+      window.removeEventListener('mousemove', handleMouseMove);
+    };
   }, []);
 
   useFrame((state) => {

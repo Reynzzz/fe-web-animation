@@ -6,13 +6,12 @@
   import LoadingScreen from './components/LoadingScreen';
   import CustomCursor from './components/CustomCursor';
 
-  // Lazy load pages for better performance (Code Splitting)
-  const Home = lazy(() => import('./pages/Home'));
-  const About = lazy(() => import('./pages/About'));
-  const Services = lazy(() => import('./pages/Services'));
-  const Works = lazy(() => import('./pages/Works'));
-  const WorkDetail = lazy(() => import('./pages/WorkDetail'));
-  const Contact = lazy(() => import('./pages/Contact'));
+  import Home from './pages/Home';
+  import About from './pages/About';
+  import Services from './pages/Services';
+  import Works from './pages/Works';
+  import WorkDetail from './pages/WorkDetail';
+  import Contact from './pages/Contact';
 
   function PageLoader() {
     return (
@@ -29,22 +28,18 @@
     const location = useLocation();
     
     return (
-      <AnimatePresence mode="wait">
-        <div key={location.pathname}>
-          <Suspense fallback={<PageLoader />}>
-            <Routes location={location}>
-              <Route path="/" element={<Layout />}>
-                <Route index element={<Home />} />
-                <Route path="works" element={<Works />} />
-                <Route path="works/:slug" element={<WorkDetail />} />
-                <Route path="about" element={<About />} />
-                <Route path="services" element={<Services />} />
-                <Route path="contact" element={<Contact />} />
-              </Route>
-            </Routes>
-          </Suspense>
-        </div>
-      </AnimatePresence>
+      <Suspense fallback={<PageLoader />}>
+        <Routes location={location}>
+          <Route path="/" element={<Layout />}>
+            <Route index element={<Home />} />
+            <Route path="works" element={<Works />} />
+            <Route path="works/:slug" element={<WorkDetail />} />
+            <Route path="about" element={<About />} />
+            <Route path="services" element={<Services />} />
+            <Route path="contact" element={<Contact />} />
+          </Route>
+        </Routes>
+      </Suspense>
     );
   }
 

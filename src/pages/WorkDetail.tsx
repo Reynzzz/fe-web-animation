@@ -117,10 +117,34 @@ export default function WorkDetail() {
     }, containerRef);
 
     debouncedScrollRefresh(500);
+    const t1 = setTimeout(() => debouncedScrollRefresh(100), 1200);
+    const t2 = setTimeout(() => debouncedScrollRefresh(100), 2500);
+
+    const imgs = containerRef.current?.querySelectorAll("img") || [];
+    let loadedCount = 0;
+    const checkImages = () => {
+      loadedCount++;
+      if (loadedCount >= imgs.length) {
+        debouncedScrollRefresh(200);
+      }
+    };
+    
+    if (imgs.length > 0) {
+      imgs.forEach(img => {
+        if (img.complete) {
+          checkImages();
+        } else {
+          img.addEventListener("load", checkImages, { once: true });
+          img.addEventListener("error", checkImages, { once: true });
+        }
+      });
+    }
 
     return () => {
       window.removeEventListener("load", refreshScrollTrigger);
       window.removeEventListener("resize", refreshScrollTrigger);
+      clearTimeout(t1);
+      clearTimeout(t2);
       ctx.revert();
     };
   }, [project]);

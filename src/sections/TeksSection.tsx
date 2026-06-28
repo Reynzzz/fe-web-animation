@@ -15,8 +15,18 @@ const japaneseWords = [
   '造形',
   '映像',
   '世界',
-
 ];
+
+// PERBAIKAN 1: Mapping terjemahan dibuat per-kata, bukan per-kalimat
+const japaneseTranslations: Record<string, string> = {
+  'We': '我々',
+  'are': 'は',
+  'a': 'と',
+  'brand': '銘柄',
+  'of': 'の',
+  'collective': '集合',
+  'creativity': '創造',
+};
 
 type WordData = {
   wrapper: HTMLSpanElement;
@@ -28,16 +38,8 @@ type WordData = {
 };
 
 const fadeUp = {
-  initial: {
-    opacity: 0,
-    y: 18,
-    filter: 'blur(10px)',
-  },
-  animate: {
-    opacity: 1,
-    y: 0,
-    filter: 'blur(0px)',
-  },
+  initial: { opacity: 0, y: 18, filter: 'blur(10px)' },
+  animate: { opacity: 1, y: 0, filter: 'blur(0px)' },
 };
 
 const DEFAULT_HERO = {
@@ -67,14 +69,9 @@ export default function MonopoHero() {
     if (!headline || !lens) return;
 
     const words: WordData[] = [];
-    const lines = headline.querySelectorAll<HTMLSpanElement>('.line');
+    const lineEls = headline.querySelectorAll<HTMLSpanElement>('.line');
 
-    lines.forEach((line) => {
-      /**
-       * IMPORTANT:
-       * React StrictMode bisa menjalankan useEffect 2x di development.
-       * Jadi kita simpan teks asli sekali, lalu selalu split dari data-raw-text.
-       */
+    lineEls.forEach((line) => {
       if (!line.dataset.rawText) {
         line.dataset.rawText = line.textContent || '';
       }
@@ -82,6 +79,7 @@ export default function MonopoHero() {
       const text = line.dataset.rawText;
       line.innerHTML = '';
 
+      // PERBAIKAN 2: Memisahkan string berdasarkan spasi agar menjadi array kata
       const splitWords = text.trim().split(/\s+/);
 
       splitWords.forEach((word, index) => {
@@ -123,21 +121,18 @@ export default function MonopoHero() {
       });
     });
 
-    wordsRef.current = [];
     wordsRef.current = words;
 
     requestAnimationFrame(() => {
       wordsRef.current.forEach(({ wrapper, originalEl }) => {
         wrapper.style.width = 'auto';
-
         const width = originalEl.getBoundingClientRect().width;
         wrapper.style.width = `${width}px`;
       });
     });
 
-    const getRandomJapaneseWord = () => {
-      return japaneseWords[Math.floor(Math.random() * japaneseWords.length)];
-    };
+    const getRandomJapaneseWord = () =>
+      japaneseWords[Math.floor(Math.random() * japaneseWords.length)];
 
     const enterRadius = 115;
     const leaveRadius = 160;
@@ -145,23 +140,11 @@ export default function MonopoHero() {
     let mouseX = window.innerWidth / 2;
     let mouseY = window.innerHeight / 2;
     let ticking = false;
-
-    const lensX = gsap.quickTo(lens, 'left', {
-      duration: 0.22,
-      ease: 'power3.out',
-    });
-
-    const lensY = gsap.quickTo(lens, 'top', {
-      duration: 0.22,
-      ease: 'power3.out',
-    });
-
-    const lensOpacity = gsap.quickTo(lens, 'opacity', {
-      duration: 0.2,
-      ease: 'power2.out',
-    });
-
     let activeWordsCount = 0;
+
+    const lensX = gsap.quickTo(lens, 'left', { duration: 0.22, ease: 'power3.out' });
+    const lensY = gsap.quickTo(lens, 'top', { duration: 0.22, ease: 'power3.out' });
+    const lensOpacity = gsap.quickTo(lens, 'opacity', { duration: 0.2, ease: 'power2.out' });
 
     const resetWords = () => {
       activeWordsCount = 0;
@@ -178,21 +161,8 @@ export default function MonopoHero() {
         originalEl.textContent = original;
         jpEl.textContent = original;
 
-        gsap.set(wrapper, {
-          y: 0,
-          scale: 1,
-          rotate: 0,
-          skewX: 0,
-          filter: 'brightness(1)',
-        });
-
-        gsap.set(originalEl, {
-          opacity: 1,
-          filter: 'blur(0px)',
-          x: 0,
-          y: 0,
-        });
-
+        gsap.set(wrapper, { y: 0, scale: 1, rotate: 0, skewX: 0, filter: 'brightness(1)' });
+        gsap.set(originalEl, { opacity: 1, filter: 'blur(0px)', x: 0, y: 0 });
         gsap.set(jpEl, {
           opacity: 0,
           filter: 'blur(8px)',
@@ -220,7 +190,8 @@ export default function MonopoHero() {
           gsap.to(lens, { scale: 1.8, duration: 0.28, ease: 'power3.out', overwrite: 'auto' });
         }
 
-        wordData.targetWord = getRandomJapaneseWord();
+        const targetWord = japaneseTranslations[wordData.original] || getRandomJapaneseWord();
+        wordData.targetWord = targetWord;
         jpEl.textContent = wordData.targetWord;
 
         gsap.killTweensOf([originalEl, jpEl]);
@@ -242,21 +213,8 @@ export default function MonopoHero() {
 
         gsap.fromTo(
           jpEl,
-          {
-            opacity: 0,
-            filter: 'blur(7px)',
-            xPercent: -50,
-            yPercent: -50,
-            x: 0,
-            y: 0,
-          },
-          {
-            opacity: 1,
-            filter: 'blur(0px)',
-            duration: 0.38,
-            ease: 'power3.out',
-            overwrite: true,
-          }
+          { opacity: 0, filter: 'blur(7px)', xPercent: -50, yPercent: -50, x: 0, y: 0 },
+          { opacity: 1, filter: 'blur(0px)', duration: 0.38, ease: 'power3.out', overwrite: true }
         );
       }
 
@@ -286,51 +244,23 @@ export default function MonopoHero() {
 
       gsap.killTweensOf([wrapper, originalEl, jpEl]);
 
-      gsap.to(jpEl, {
-        opacity: 0,
-        filter: 'blur(7px)',
-        duration: 0.24,
-        ease: 'power3.out',
-        overwrite: true,
-      });
-
-      gsap.to(originalEl, {
-        opacity: 1,
-        filter: 'blur(0px)',
-        duration: 0.36,
-        ease: 'power3.out',
-        overwrite: true,
-      });
-
-      gsap.to(wrapper, {
-        y: 0,
-        scale: 1,
-        rotate: 0,
-        skewX: 0,
-        filter: 'brightness(1)',
-        duration: 0.34,
-        ease: 'power3.out',
-        overwrite: true,
-      });
+      gsap.to(jpEl, { opacity: 0, filter: 'blur(7px)', duration: 0.24, ease: 'power3.out', overwrite: true });
+      gsap.to(originalEl, { opacity: 1, filter: 'blur(0px)', duration: 0.36, ease: 'power3.out', overwrite: true });
+      gsap.to(wrapper, { y: 0, scale: 1, rotate: 0, skewX: 0, filter: 'brightness(1)', duration: 0.34, ease: 'power3.out', overwrite: true });
     };
 
     const updateWords = () => {
       wordsRef.current.forEach((wordData) => {
-        const { wrapper } = wordData;
-
-        const rect = wrapper.getBoundingClientRect();
-
+        const rect = wordData.wrapper.getBoundingClientRect();
         const wordX = rect.left + rect.width / 2;
         const wordY = rect.top + rect.height / 2;
 
         const dx = mouseX - wordX;
         const dy = mouseY - wordY;
-
         const distance = Math.sqrt(dx * dx + dy * dy);
 
         if (distance < enterRadius) {
-          const intensity = 1 - distance / enterRadius;
-          activateWord(wordData, intensity);
+          activateWord(wordData, 1 - distance / enterRadius);
           return;
         }
 
@@ -344,13 +274,12 @@ export default function MonopoHero() {
       lensX(mouseX);
       lensY(mouseY);
       lensOpacity(1);
-
       updateWords();
-
       ticking = false;
     };
 
     const handleMouseMove = (event: MouseEvent) => {
+      if (window.innerWidth <= 900) return;
       mouseX = event.clientX;
       mouseY = event.clientY;
 
@@ -360,14 +289,11 @@ export default function MonopoHero() {
       }
     };
 
-    const handleMouseLeave = () => {
-      resetWords();
-    };
+    const handleMouseLeave = () => resetWords();
 
     const handleResize = () => {
       wordsRef.current.forEach(({ wrapper, originalEl }) => {
         wrapper.style.width = 'auto';
-
         const width = originalEl.getBoundingClientRect().width;
         wrapper.style.width = `${width}px`;
       });
@@ -381,7 +307,7 @@ export default function MonopoHero() {
     return () => {
       resetWords();
 
-      lines.forEach((line) => {
+      lineEls.forEach((line) => {
         if (line.dataset.rawText) {
           line.textContent = line.dataset.rawText;
         }
@@ -399,40 +325,29 @@ export default function MonopoHero() {
   useEffect(() => {
     const updateTime = () => {
       if (!timeRef.current) return;
-
       const now = new Date();
-
-      const formatted = now.toLocaleTimeString('en-US', {
+      timeRef.current.textContent = now.toLocaleTimeString('en-US', {
         hour: '2-digit',
         minute: '2-digit',
         hour12: true,
       });
-
-      timeRef.current.textContent = formatted;
     };
 
     updateTime();
-
     const interval = window.setInterval(updateTime, 1000);
-
     return () => window.clearInterval(interval);
   }, []);
 
   return (
-    <section className="relative h-screen w-full cursor-none overflow-hidden bg-[#020204] font-sans text-white antialiased">
+    <section className="relative h-screen w-full cursor-none max-[900px]:cursor-auto overflow-hidden bg-[#020204] font-sans text-white antialiased">
       <AnimatedMonopoShaderBackground />
 
       <motion.div
         className="pointer-events-none absolute inset-0 z-20"
         initial="initial"
         animate="animate"
-        transition={{
-          staggerChildren: 0.08,
-          delayChildren: 0.25,
-        }}
+        transition={{ staggerChildren: 0.08, delayChildren: 0.25 }}
       >
-
-
         <motion.main
           variants={fadeUp}
           transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1], delay: 0.15 }}
@@ -492,11 +407,12 @@ export default function MonopoHero() {
         />
       </motion.div>
 
+      {/* PERBAIKAN 3: Menambahkan class backdrop-blur-md agar lensa tampak mendistorsi background seperti kaca */}
+     {/* KODE BARU: Tanpa backdrop-blur-md */}
       <div
         ref={lensRef}
-        className="pointer-events-none fixed left-0 top-0 z-40 h-[95px] w-[95px] -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-full border-[1.5px] border-white/40 bg-transparent opacity-0 shadow-[inset_10px_12px_24px_rgba(255,255,255,0.10),0_16px_50px_rgba(0,0,0,0.42)] max-[900px]:h-[80px] max-[900px]:w-[80px]"
-      >
-      </div>
+        className="pointer-events-none fixed left-0 top-0 z-40 h-[110px] w-[110px] -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-full border-[1.5px] border-white/30 bg-transparent opacity-0 shadow-[inset_10px_12px_24px_rgba(255,255,255,0.15),0_16px_50px_rgba(0,0,0,0.42)] max-[900px]:hidden"
+      />
     </section>
   );
 }

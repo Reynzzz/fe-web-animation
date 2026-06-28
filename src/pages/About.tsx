@@ -13,8 +13,8 @@ gsap.registerPlugin(ScrollTrigger);
 // Data structure updated based on the image content
 type TeamMember = {
   id: string | number;
-  name: string;
-  role: string;
+  title: string;
+  body: string;
   image: string;
 };
 
@@ -40,8 +40,8 @@ export default function About() {
     if (!Array.isArray(items.member)) return [];
     return items.member.map((item) => ({
       id: item.id || `member-${item.slug}`,
-      name: item.name,
-      role: item.role,
+      title: item.title,
+      body: item.body,
       image: resolveMediaUrl(item.image),
     }));
   }, [items.member]);
@@ -130,14 +130,14 @@ export default function About() {
             Our Team
           </h1>
           <nav className="text-white/60 text-sm md:text-base mt-2 flex items-center justify-center gap-2">
-           
+
             {/* <span className="text-ayuta-pink font-bold">OUR TEAM</span> */}
           </nav>
         </section>
 
         {/* 2. Intro Section - updated styling for "Awesome team members" */}
         <section className="about-stagger max-w-2xl mx-auto mb-20 text-center md:mb-28">
-         
+
           <h2 className="mt-4 font-display text-4xl font-semibold leading-tight text-white md:text-5xl">
             Awesome team members
           </h2>
@@ -149,23 +149,24 @@ export default function About() {
             {teamMembers.map((member, i) => (
               <article
                 key={member.id}
-                className="about-stagger group relative overflow-hidden rounded-3xl border border-white/10 bg-white/[0.04] p-6 backdrop-blur-md"
+                className="about-stagger group relative overflow-hidden rounded-3xl aspect-[4/5]"
               >
-                <div className="absolute inset-0 bg-ayuta-primary opacity-0 transition-opacity duration-500 group-hover:opacity-10" />
-                <div className="relative z-10 aspect-square overflow-hidden rounded-2xl bg-white/[0.06] mb-5">
+                <div className="absolute inset-0">
                   <img
                     src={member.image}
-                    alt={member.name}
+                    alt={member.title}
                     loading="lazy"
-                    className="h-full w-full object-cover grayscale transition-transform duration-500 group-hover:scale-105"
+                    className="h-full w-full object-cover grayscale transition-transform duration-500 group-hover:scale-110"
                   />
                 </div>
-                <div className="relative z-10 text-center">
+                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-90 transition-opacity duration-500 group-hover:opacity-100" />
+                
+                <div className="absolute inset-0 flex flex-col justify-end p-6 z-10 text-start">
                   <h3 className="mb-2 text-xl font-bold text-white">
-                    {member.name || "Untitled"}
+                    {member.title || "Untitled"}
                   </h3>
-                  <p className="leading-relaxed text-white/45 text-sm">
-                    {member.role || ""}
+                  <p className="leading-relaxed text-white text-sm">
+                    {member.body || ""}
                   </p>
                 </div>
               </article>
@@ -175,11 +176,11 @@ export default function About() {
       </div>
 
       {/* 4. CTA SECTION - full width section with background, graphic and link, using user color logic */}
-    
+
 
       {/* 5. Partner Section - retained below the main photo content area */}
-      <PartnerSection />
-        <section className="w-full bg-[#080808] border-t border-white/5 py-24 relative px-6">
+
+      <section className="w-full bg-[#080808] border-t border-white/5 py-24 relative px-6">
         {/* Replace red triangle indicators with pink ones */}
         <div className="absolute left-1/4 top-1/4 -translate-x-1/2 -translate-y-1/2 opacity-60">
           <TriangleSVG className="w-3 h-3 text-ayuta-pink" />

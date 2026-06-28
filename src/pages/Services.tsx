@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { ArrowUpRight, ArrowDown } from 'lucide-react';
 import { fetchServices, resolveMediaUrl } from '@/lib/api';
+import PartnerSection from '@/sections/PartnerSection';
 
 const defaultServicesList = [
   {
@@ -201,7 +202,7 @@ export default function Services() {
           </div>
         </div>
       </section>
-
+ <PartnerSection />
     </main>
   );
 }

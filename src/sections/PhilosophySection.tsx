@@ -85,7 +85,7 @@ export default function PhilosophySection() {
           transition={{ duration: 1.2, ease: "circOut" }}
           className="font-serif text-white text-center leading-[0.8] tracking-tighter text-[16vw] md:text-[14vw] select-none uppercase"
         >
-          Ecosystem
+          Our Ecosystem
         </motion.h1>
       </div>
 

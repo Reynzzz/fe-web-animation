@@ -33,57 +33,16 @@ export default function PhilosophySection() {
   return (
     <section className="relative min-h-screen bg-[#050505] overflow-hidden flex flex-col justify-between pt-24 pb-12">
       
-      {/* TOP SECTION (Teks Kiri & Tombol Kanan) */}
-      <div className="relative z-20 flex flex-col-reverse md:flex-row justify-between items-start px-6 md:px-12 gap-8 md:gap-0">
-        
-        {/* Teks Deskripsi (Kiri) */}
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.5 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          className="flex flex-col sm:flex-row gap-6 md:gap-12 max-w-2xl mt-4 md:mt-12"
-        >
-          <p className="text-white/50 text-xs md:text-sm leading-relaxed max-w-[240px] font-light">
-            We are a creative agency that helps brands stand out through cinematic digital art and meaningful experiences.
-          </p>
-          <p className="text-white/50 text-xs md:text-sm leading-relaxed max-w-[240px] font-light">
-            Our ecosystem is built on innovation, strategic design, and pushing the boundaries of digital interactions.
-          </p>
-        </motion.div>
-
-        {/* Tombol Lingkaran (Kanan) */}
-        <motion.a 
-          href="#" 
-          initial={{ opacity: 0, scale: 0.8 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true, amount: 0.5 }}
-          transition={{ duration: 0.8, delay: 0.2, ease: "backOut" }}
-          className="group w-28 h-28 md:w-36 md:h-36 rounded-full border border-white/20 flex flex-col items-center justify-center text-center p-4 hover:border-ayuta-pink transition-colors duration-500 shrink-0 self-end md:self-auto"
-        >
-          <div className="flex items-center gap-1 mb-1">
-            <span className="text-[10px] md:text-xs text-white/70 uppercase tracking-widest group-hover:text-ayuta-pink transition-colors">
-              Explore
-            </span>
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white/70 group-hover:text-ayuta-pink group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all">
-              <path d="M7 17 17 7" />
-              <path d="M7 7h10v10" />
-            </svg>
-          </div>
-          <span className="text-[10px] md:text-xs text-white/70 uppercase tracking-widest group-hover:text-ayuta-pink transition-colors">
-            New <br /> Collection
-          </span>
-        </motion.a>
-      </div>
+  
 
       {/* GIANT TITLE (Tengah) */}
-      <div className="relative z-10 flex justify-center w-full px-4 mt-8 md:-mt-12 mb-12 md:mb-0">
+      <div className="relative z-10 flex justify-center w-full px-4 mt-8 md:-mt-12 mb-12 md:mb-12">
         <motion.h1 
           initial={{ opacity: 0, y: 50, filter: "blur(10px)" }}
           whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 1.2, ease: "circOut" }}
-          className="font-serif text-white text-center leading-[0.8] tracking-tighter text-[16vw] md:text-[14vw] select-none uppercase"
+          className="font-serif text-white text-center leading-[0.8] tracking-tighter text-[16vw] md:text-[13vw] select-none uppercase"
         >
           Our Ecosystem
         </motion.h1>

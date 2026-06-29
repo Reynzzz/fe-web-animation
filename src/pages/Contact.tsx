@@ -63,7 +63,7 @@ export default function Contact() {
                 </div>
                 <div>
                   <div className="text-xs sm:text-sm text-white/30 uppercase tracking-widest">Email Us</div>
-                  <div className="text-lg sm:text-xl font-medium">hello@ayuta.jp</div>
+                  <div className="text-lg sm:text-xl font-medium">mail@ayuta.id</div>
                 </div>
               </div>
               <div className="flex gap-4 sm:gap-6 items-center">
@@ -72,7 +72,7 @@ export default function Contact() {
                 </div>
                 <div>
                   <div className="text-xs sm:text-sm text-white/30 uppercase tracking-widest">Visit Us</div>
-                  <div className="text-lg sm:text-xl font-medium">Shibuya, Tokyo</div>
+                  <div className="text-lg sm:text-xl font-medium">Indonesia, Jakarta</div>
                 </div>
               </div>
             </div>

@@ -4,6 +4,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { useState } from 'react';
 import MainLogo from '@/assets/Main_Logo.png';
 const NAV_LINKS = [
+  { label: 'Home', path: '/' },
   { label: 'About', path: '/about' },
   { label: 'Services', path: '/services' },
   { label: 'Work', path: '/works' },
@@ -54,7 +55,7 @@ export default function Navbar() {
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            className="fixed inset-0 bg-[#050505] flex flex-col items-start justify-center px-12 md:hidden z-40"
+            className="fixed inset-0 bg-[#050505]/50 backdrop-blur-md flex flex-col items-start justify-center px-12 md:hidden z-40"
             initial={{ y: '-100%' }}
             animate={{ y: '0%' }}
             exit={{ y: '-100%' }}

@@ -52,10 +52,10 @@ export default function Contact() {
               LET'S <br /> <span className="text-ayuta-pink">TALK.</span>
             </h1>
             <p className="text-lg sm:text-2xl text-white/50 font-light mb-10 md:mb-16 leading-relaxed">
-              Whether you have a fully-fledged concept or just the seed of an idea, 
+              Whether you have a fully-fledged concept or just the seed of an idea,
               we're here to help you bring it to life.
             </p>
- 
+
             <div className="space-y-8 md:space-y-12">
               <div className="flex gap-4 sm:gap-6 items-center">
                 <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl glass-panel flex items-center justify-center text-ayuta-pink">
@@ -77,10 +77,10 @@ export default function Contact() {
               </div>
             </div>
           </div>
- 
+
           <div className="glass-panel p-6 sm:p-12 rounded-[1.5rem] sm:rounded-[2rem] relative">
             <div className="absolute -top-10 -right-10 w-40 h-40 bg-ayuta-pink/20 blur-3xl rounded-full" />
-            
+
             <form className="space-y-6 sm:space-y-8" onSubmit={handleSubmit}>
               {status === 'success' && (
                 <div className="bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 p-4 rounded-xl flex items-center gap-3 text-sm">
@@ -88,19 +88,19 @@ export default function Contact() {
                   <span>{statusMsg}</span>
                 </div>
               )}
- 
+
               {status === 'error' && (
                 <div className="bg-red-500/10 border border-red-500/20 text-red-400 p-4 rounded-xl flex items-center gap-3 text-sm">
                   <AlertCircle className="w-5 h-5 flex-shrink-0" />
                   <span>{statusMsg}</span>
                 </div>
               )}
- 
+
               <div className="space-y-2">
                 <label className="text-xs uppercase tracking-widest text-white/30 ml-2 sm:ml-4">Full Name</label>
-                <input 
-                  type="text" 
-                  placeholder="John Doe" 
+                <input
+                  type="text"
+                  placeholder="John Doe"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   required
@@ -110,9 +110,9 @@ export default function Contact() {
               </div>
               <div className="space-y-2">
                 <label className="text-xs uppercase tracking-widest text-white/30 ml-2 sm:ml-4">Email Address</label>
-                <input 
-                  type="email" 
-                  placeholder="john@example.com" 
+                <input
+                  type="email"
+                  placeholder="john@example.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
@@ -122,9 +122,9 @@ export default function Contact() {
               </div>
               <div className="space-y-2">
                 <label className="text-xs uppercase tracking-widest text-white/30 ml-2 sm:ml-4">Message</label>
-                <textarea 
-                  rows={4} 
-                  placeholder="Tell us about your project..." 
+                <textarea
+                  rows={4}
+                  placeholder="Tell us about your project..."
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
                   required
@@ -132,8 +132,8 @@ export default function Contact() {
                   className="w-full bg-white/5 border border-white/10 rounded-xl sm:rounded-2xl py-3 sm:py-4 px-4 sm:px-6 focus:border-ayuta-pink outline-none transition-colors resize-none disabled:opacity-50 text-sm sm:text-base"
                 />
               </div>
-              
-              <MagneticButton 
+
+              <MagneticButton
                 type="submit"
                 disabled={loading}
                 className="w-full bg-ayuta-pink border-none py-4 sm:py-6 text-base sm:text-lg justify-center disabled:opacity-50 flex items-center"

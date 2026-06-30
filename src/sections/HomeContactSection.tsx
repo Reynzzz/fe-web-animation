@@ -43,13 +43,13 @@ export default function HomeContactSection() {
           </p>
           
           <div className="flex gap-8 contact-reveal">
-            <a href="#" className="p-4 rounded-full border border-white/10 hover:border-white/30 transition-colors text-white/50 hover:text-white">
+            <a href="#" aria-label="Instagram" className="p-4 rounded-full border border-white/10 hover:border-white/30 transition-colors text-white/50 hover:text-white">
               <Instagram className="w-6 h-6" />
             </a>
-            <a href="#" className="p-4 rounded-full border border-white/10 hover:border-white/30 transition-colors text-white/50 hover:text-white">
+            <a href="#" aria-label="Twitter" className="p-4 rounded-full border border-white/10 hover:border-white/30 transition-colors text-white/50 hover:text-white">
               <Twitter className="w-6 h-6" />
             </a>
-            <a href="#" className="p-4 rounded-full border border-white/10 hover:border-white/30 transition-colors text-white/50 hover:text-white">
+            <a href="#" aria-label="LinkedIn" className="p-4 rounded-full border border-white/10 hover:border-white/30 transition-colors text-white/50 hover:text-white">
               <Linkedin className="w-6 h-6" />
             </a>
           </div>
@@ -60,6 +60,7 @@ export default function HomeContactSection() {
             <div className="relative group">
               <input 
                 type="text" 
+                aria-label="Full Name"
                 placeholder="Full Name" 
                 className="w-full bg-transparent border-b border-white/10 py-6 text-xl focus:border-white transition-colors outline-none placeholder:text-white/10"
               />
@@ -68,6 +69,7 @@ export default function HomeContactSection() {
             <div className="relative group">
               <input 
                 type="email" 
+                aria-label="Email Address"
                 placeholder="Email Address" 
                 className="w-full bg-transparent border-b border-white/10 py-6 text-xl focus:border-white transition-colors outline-none placeholder:text-white/10"
               />
@@ -75,6 +77,7 @@ export default function HomeContactSection() {
             </div>
             <div className="relative group">
               <textarea 
+                aria-label="Tell us about your project"
                 placeholder="Tell us about your project" 
                 rows={4}
                 className="w-full bg-transparent border-b border-white/10 py-6 text-xl focus:border-white transition-colors outline-none placeholder:text-white/10 resize-none"

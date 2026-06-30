@@ -104,6 +104,8 @@ export default function AboutSection() {
           <img
             src={resolveMediaUrl(data.image)}
             alt="Studio Environment"
+            loading="lazy"
+            decoding="async"
             className="about-parallax-img w-full h-[120%] object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />

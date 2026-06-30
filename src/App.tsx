@@ -6,12 +6,12 @@
   import LoadingScreen from './components/LoadingScreen';
   import CustomCursor from './components/CustomCursor';
 
-  import Home from './pages/Home';
-  import About from './pages/About';
-  import Services from './pages/Services';
-  import Works from './pages/Works';
-  import WorkDetail from './pages/WorkDetail';
-  import Contact from './pages/Contact';
+  const Home = lazy(() => import('./pages/Home'));
+  const About = lazy(() => import('./pages/About'));
+  const Services = lazy(() => import('./pages/Services'));
+  const Works = lazy(() => import('./pages/Works'));
+  const WorkDetail = lazy(() => import('./pages/WorkDetail'));
+  const Contact = lazy(() => import('./pages/Contact'));
 
   function PageLoader() {
     return (

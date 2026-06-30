@@ -1,8 +1,9 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, lazy, Suspense } from 'react';
 import { motion } from 'motion/react';
 import gsap from 'gsap';
-import AnimatedMonopoShaderBackground from '@/components/BackgroundAnimation';
 import { useSiteContent } from '@/context/SiteContentContext';
+
+const AnimatedMonopoShaderBackground = lazy(() => import('@/components/BackgroundAnimation'));
 
 const japaneseWords = [
   '創造',
@@ -340,7 +341,9 @@ export default function MonopoHero() {
 
   return (
     <section className="relative h-screen w-full cursor-none max-[900px]:cursor-auto overflow-hidden bg-[#020204] font-sans text-white antialiased">
-      <AnimatedMonopoShaderBackground />
+      <Suspense fallback={<div className="absolute inset-0 bg-[#020204]" />}>
+        <AnimatedMonopoShaderBackground />
+      </Suspense>
 
       <motion.div
         className="pointer-events-none absolute inset-0 z-20"

@@ -10,14 +10,14 @@ export default function Footer() {
           {/* LEFT: HEADLINE + EMAIL */}
           <div className="lg:pt-1">
             <h2 className="text-4xl md:text-6xl font-extralight leading-[1.05] tracking-tight">
-              READY WHEN
+              READY TO
               <br />
-              YOU ARE.
+             BUILD YOUR CASE?
             </h2>
             <p className="text-white/60 text-base md:text-lg mt-4">
-              Let&apos;s talk about what&apos;s next.
+            Let’s map your commercial objectives to an
             </p>
-
+<p> experience your finance team can see, and your audience won’t forget.</p>
             <a
               href="mailto:mail@ayuta.id"
               className="group inline-flex items-center gap-2 text-xl md:text-2xl font-semibold whitespace-nowrap hover:text-[#d154b8] transition-colors mt-8"
@@ -51,11 +51,17 @@ export default function Footer() {
               <h4 className="text-xs font-bold tracking-widest text-white/50 uppercase mt-8 mb-3">
                 Phone
               </h4>
-              <p className="text-white/80 text-sm leading-relaxed">
-                (021) 470 6434
-                <br />
-                (021) 470 6435
-              </p>
+             <p className="text-white/80 text-sm leading-relaxed">
+  <a 
+    href="https://wa.me/6285773672611" 
+    target="_blank" 
+    rel="noopener noreferrer"
+    className="hover:text-white hover:underline transition-colors"
+  >
+    0857-7367-2611
+  </a>
+  <br />
+</p>
             </div>
 
             {/* FOLLOW US */}

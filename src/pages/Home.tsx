@@ -15,7 +15,7 @@ export default function Home() {
       <MonopoHero />
       <AboutOverviewSection />
       <WorksSection />
-      <PhilosophySection />
+      {/* <PhilosophySection /> */}
       {/* <GroupSection /> */}
       {/* <AchievementSection /> */}
    

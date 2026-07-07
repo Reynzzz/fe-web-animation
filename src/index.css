@@ -79,6 +79,19 @@
   }
 }
 
+@keyframes marquee-logos {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee-logos {
+  animation: marquee-logos 25s linear infinite;
+}
+
 @layer base {
   body {
     @apply selection:bg-ayuta-primary selection:text-white antialiased overflow-x-hidden bg-background text-foreground;

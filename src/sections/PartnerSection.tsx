@@ -36,22 +36,22 @@ export default function PartnerSection() {
 
           {/* Kolom Kanan: Grid Logo Klien */}
           <div className="lg:col-span-7 mt-8 lg:mt-0">
-            <div className="flex flex-col border-t border-white/10">
+            <div className="flex flex-col border-t border-white/20">
               {partnerRows.map((row, rowIndex) => (
                 <div 
                   key={rowIndex} 
-                  className="grid grid-cols-2 md:grid-cols-3 border-b border-white/10"
+                  className="flex flex-wrap justify-center border-b border-white/20"
                 >
                   {row.map((partner, index) => (
                     <div 
                       key={partner.id || index} 
-                      className="flex items-center justify-center py-8 px-4"
+                      className="w-1/2 md:w-1/3 flex items-center justify-center py-8 md:py-0 px-3"
                     >
                       <img
                         src={resolveMediaUrl(partner.image)}
                         alt={partner.title || 'Partner Logo'}
                         loading="lazy"
-                        className="h-10 md:h-12 w-auto object-contain opacity-50 hover:opacity-100 hover:scale-105 transition-all duration-500 filter brightness-0 invert"
+                        className="h-20 md:h-28 lg:h-40 w-[95%] max-w-[240px] object-cover opacity-70 hover:opacity-100 hover:scale-105 transition-all duration-500 filter grayscale hover:grayscale-0 contrast-200 brightness-200 hover:contrast-100 hover:brightness-100"
                         draggable={false}
                       />
                     </div>

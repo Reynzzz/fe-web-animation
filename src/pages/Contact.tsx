@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Mail, MessageCircle, MapPin, ArrowRight, CheckCircle, AlertCircle, Loader2 } from 'lucide-react';
 import MagneticButton from '@/components/MagneticButton';
-import { API_URL } from '@/lib/api';
+import { API_URL, resolveMediaUrl } from '@/lib/api';
+import { useSiteContent } from '@/context/SiteContentContext';
 
 export default function Contact() {
   const [name, setName] = useState('');
@@ -49,33 +50,14 @@ export default function Contact() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-32">
           <div>
             <h1 className="text-5xl sm:text-7xl md:text-9xl font-display font-bold tracking-tighter mb-8 md:mb-12">
-              LET'S <br /> <span className="text-ayuta-pink">TALK.</span>
+              GET IN<br /> <span className="text-ayuta-pink">TOUCH.</span>
             </h1>
             <p className="text-lg sm:text-2xl text-white/50 font-light mb-10 md:mb-16 leading-relaxed">
-              Whether you have a fully-fledged concept or just the seed of an idea,
-              we're here to help you bring it to life.
+         Let’s collaborate to ignite deep, authentic connections through emotionally engaging experiences.
+
             </p>
 
-            <div className="space-y-8 md:space-y-12">
-              <div className="flex gap-4 sm:gap-6 items-center">
-                <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl glass-panel flex items-center justify-center text-ayuta-pink">
-                  <Mail className="w-5 h-5 sm:w-6 sm:h-6" />
-                </div>
-                <div>
-                  <div className="text-xs sm:text-sm text-white/30 uppercase tracking-widest">Email Us</div>
-                  <div className="text-lg sm:text-xl font-medium">mail@ayuta.id</div>
-                </div>
-              </div>
-              <div className="flex gap-4 sm:gap-6 items-center">
-                <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl glass-panel flex items-center justify-center text-ayuta-pink">
-                  <MapPin className="w-5 h-5 sm:w-6 sm:h-6" />
-                </div>
-                <div>
-                  <div className="text-xs sm:text-sm text-white/30 uppercase tracking-widest">Visit Us</div>
-                  <div className="text-lg sm:text-xl font-medium">Indonesia, Jakarta</div>
-                </div>
-              </div>
-            </div>
+       
           </div>
 
           <div className="glass-panel p-6 sm:p-12 rounded-[1.5rem] sm:rounded-[2rem] relative">
@@ -152,6 +134,50 @@ export default function Contact() {
           </div>
         </div>
       </div>
+
+      {/* ── Join the Growing List Section ── */}
+      <BrandPartnersSection />
     </main>
+  );
+}
+
+function BrandPartnersSection() {
+  const { items } = useSiteContent();
+  const partners = items.partner || [];
+
+  if (partners.length === 0) return null;
+
+  const doubled = [...partners, ...partners];
+
+  return (
+    <section className="w-full bg-[#080808]  py-12 md:py-16 mt-10">
+      <div className="flex flex-col gap-8">
+        {/* Heading */}
+        <p className="text-center text-white text-xs sm:text-sm md:text-lg font-bold uppercase tracking-[0.35em] px-4">
+          Join the growing list of brands partnering with us
+        </p>
+
+        {/* Divider */}
+       
+
+        {/* Auto-scrolling logos */}
+        <div className="overflow-hidden w-full">
+          <div
+            className="flex items-center gap-12 md:gap-20 animate-marquee-logos whitespace-nowrap"
+            style={{ willChange: 'transform' }}
+          >
+            {doubled.map((partner, i) => (
+              <img
+                key={i}
+                src={resolveMediaUrl(partner.image)}
+                alt={partner.title || 'Partner'}
+                className="h-16 md:h-28 w-auto object-contain opacity-60 hover:opacity-100 transition-opacity duration-300 filter grayscale brightness-200 contrast-200 shrink-0 inline-block"
+                draggable={false}
+              />
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
   );
 }

@@ -89,7 +89,7 @@ export default function Services() {
                 
                 {/* Paragraph next to AGENCY */}
                 <p className="text-left text-sm md:text-base text-white/60 normal-case tracking-normal font-sans font-normal max-w-xs leading-relaxed md:pb-4">
-                  We are a full service agency delivering experiences through strategy, creativity, production, and execution.
+                  From the first idea to the final experience, we help brands build experiences that bring people closer
                 </p>
               </div>
             </h1>
@@ -167,18 +167,7 @@ export default function Services() {
                           <p className="text-white/70 text-base md:text-lg font-light leading-relaxed max-w-2xl whitespace-pre-wrap">
                             {service.description}
                           </p>
-                          <div className="w-full h-[200px] md:h-[300px] rounded-xl overflow-hidden bg-white/5 border border-white/10 relative group-hover:border-ayuta-pink/30 transition-colors duration-500">
-                            {service.image ? (
-                              <img src={resolveMediaUrl(service.image)} alt={service.title} className="w-full h-full object-cover" />
-                            ) : (
-                              <>
-                                <div className="absolute inset-0 flex items-center justify-center text-white/20 text-sm tracking-widest uppercase">
-                                  Project Showcase
-                                </div>
-                                <div className="absolute inset-0 bg-gradient-to-tr from-ayuta-primary/20 to-ayuta-pink/10 opacity-50 mix-blend-overlay" />
-                              </>
-                            )}
-                          </div>
+                        
                         </div>
                       </motion.div>
                     )}
@@ -197,7 +186,7 @@ export default function Services() {
               transition={{ duration: 1, delay: 0.4 }}
               className="text-lg md:text-2xl lg:text-[22px] leading-relaxed text-white/60 font-light max-w-md"
             >
-              We work closely with brands to create experiences that align with their vision, connect with audiences, and bring campaigns to life through thoughtful strategy and execution.
+              From product launches, conferences, exhibitions, and retail experiences to brand activations, roadshows, and large-scale events, we design and execute experiences that bring brands to life. Every project is built to engage audiences, create content beyond the event, and deliver measurable results.
             </motion.p>
           </div>
         </div>

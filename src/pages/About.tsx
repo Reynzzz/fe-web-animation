@@ -343,7 +343,7 @@ export default function About() {
         <div className="mx-auto max-w-screen-2xl px-6 md:px-12 lg:px-20 mb-5 about-stagger">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-10">
             <h2 className="font-display text-4xl font-bold tracking-tight text-white uppercase  leading-tight">
-              EXECUTIVE TEAM & PARTNERS
+              EXECUTIVE TEAM 
             </h2>
           </div>
         </div>

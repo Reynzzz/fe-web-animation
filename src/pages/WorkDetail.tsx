@@ -207,26 +207,30 @@ export default function WorkDetail() {
         },
       });
 
-      if (horizontalRef.current && horizontalContainerRef.current) {
-        gsap.to(horizontalRef.current, {
-          x: () => {
-            if (!horizontalRef.current) return 0;
-            return -(horizontalRef.current.scrollWidth - window.innerWidth);
-          },
-          ease: "none",
-          scrollTrigger: {
-            trigger: horizontalContainerRef.current,
-            start: "top top",
-            end: () => {
-              if (!horizontalRef.current) return "+=0";
-              return `+=${horizontalRef.current.scrollWidth - window.innerWidth}`;
+      let mm = gsap.matchMedia();
+
+      mm.add("(min-width: 768px)", () => {
+        if (horizontalRef.current && horizontalContainerRef.current) {
+          gsap.to(horizontalRef.current, {
+            x: () => {
+              if (!horizontalRef.current) return 0;
+              return -(horizontalRef.current.scrollWidth - window.innerWidth);
             },
-            scrub: 1,
-            pin: true,
-            invalidateOnRefresh: true,
-          },
-        });
-      }
+            ease: "none",
+            scrollTrigger: {
+              trigger: horizontalContainerRef.current,
+              start: "top top",
+              end: () => {
+                if (!horizontalRef.current) return "+=0";
+                return `+=${horizontalRef.current.scrollWidth - window.innerWidth}`;
+              },
+              scrub: true,
+              pin: true,
+              invalidateOnRefresh: true,
+            },
+          });
+        }
+      });
 
       gsap.utils.toArray(".detail-stat-value").forEach((stat: any) => {
         gsap.from(stat, {
@@ -409,7 +413,7 @@ export default function WorkDetail() {
         <div className="block md:hidden px-4 space-y-8">
           <div className="flex flex-col gap-4 mb-8">
             <h4 className="text-4xl font-display font-bold text-white/40 tracking-tighter">
-              GALLERY /
+              IN ACTION
             </h4>
             <p className="text-base text-white/65 font-light">
               We explored various textures and motion patterns to ensure the
@@ -420,7 +424,7 @@ export default function WorkDetail() {
           {project.gallery.slice(1).map((img, i) => (
             <div
               key={i}
-              className="w-full h-[40vh] rounded-[1.5rem] overflow-hidden border border-white/5 cinematic-shadow"
+              className="w-full h-[40vh]  overflow-hidden border border-white/5 cinematic-shadow"
             >
               <img
                 src={resolveMediaUrl(img)}
@@ -450,7 +454,7 @@ export default function WorkDetail() {
         >
           <div className="min-w-[40vw] flex flex-col gap-8">
             <h4 className="text-[8vw] font-display font-bold text-white/40 tracking-tighter">
-              GALLERY /
+              IN ACTION 
             </h4>
 
             <p className="text-xl text-white/65 max-w-md whitespace-normal font-light">
@@ -469,7 +473,7 @@ export default function WorkDetail() {
                 loading="lazy"
                 decoding="async"
                 onLoad={() => debouncedScrollRefresh()}
-                className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-1000"
+                className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-1000 pr-5"
               />
             </div>
           ))}

@@ -71,7 +71,7 @@ export default function Works() {
   return (
     <main className="pt-24 sm:pt-28 md:pt-32 pb-16 px-4 sm:px-6 bg-[#050505] min-h-screen text-white">
       <div ref={containerRef} className="max-w-7xl mx-auto">
-        <h1 className="text-4xl sm:text-6xl md:text-8xl lg:text-[8rem] font-display font-bold tracking-tighter mb-0 leading-[0.95]">
+        <h1 className="text-2xl sm:text-4xl md:text-6xl lg:text-[7rem] text-center font-display font-bold tracking-tighter mb-0 leading-[0.95]">
           EXPERIENCES <span className="text-white/20 italic">WE BUILT </span>
         </h1>
 
@@ -98,7 +98,7 @@ export default function Works() {
                     alt={project.title}
                     loading="lazy"
                     decoding="async"
-                    className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000 scale-100 group-hover:scale-105"
+                    className="w-full h-full object-cover md:grayscale group-hover:grayscale-0 transition-all duration-1000 scale-100 group-hover:scale-105"
                   />
                   <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center backdrop-blur-[2px]">
                     <div className="flex flex-col items-center gap-2">

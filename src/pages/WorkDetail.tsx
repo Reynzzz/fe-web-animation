@@ -11,8 +11,57 @@ import { resolveMediaUrl } from "@/lib/api";
 
 gsap.registerPlugin(ScrollTrigger);
 
+// ─── Instagram Embed Section ───────────────────────────────────────────────
+function InstagramSection({ postUrl }: { postUrl: string }) {
+  useEffect(() => {
+    // dynamically load instagram embed script
+    const script = document.createElement("script");
+    script.src = "https://www.instagram.com/embed.js";
+    script.async = true;
+    document.body.appendChild(script);
+    
+    script.onload = () => {
+      if ((window as any).instgrm) {
+        (window as any).instgrm.Embeds.process();
+      }
+    };
+  }, [postUrl]);
+
+  return (
+    <section className="py-16 md:py-28 px-4 sm:px-6 max-w-7xl mx-auto">
+      <div className="flex flex-col gap-8 w-full items-center">
+        <div className="flex items-center gap-6 w-full">
+          <h4 className="text-2xl md:text-4xl font-display font-bold text-white/30 tracking-tighter whitespace-nowrap">
+            VIDEO HIGHLIGHT /
+          </h4>
+          <div className="flex-1 h-[1px] bg-white/10" />
+        </div>
+        
+        <div className="w-full flex justify-center bg-transparent">
+          <blockquote
+            className="instagram-media"
+            data-instgrm-permalink={`${postUrl}/?utm_source=ig_embed&amp;utm_campaign=loading`}
+            data-instgrm-version="14"
+            style={{
+              background: '#000', // Try to keep it dark
+              border: '0',
+              borderRadius: '1.5rem',
+              boxShadow: '0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15)',
+              margin: '1px',
+              maxWidth: '540px',
+              minWidth: '326px',
+              padding: '0',
+              width: '99.375%',
+            }}
+          ></blockquote>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 // ─── YouTube Intersection Autoplay ───────────────────────────────────────────
-function VideoSection({ videoId }: { videoId: string }) {
+function YoutubeSection({ videoId }: { videoId: string }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -135,6 +184,30 @@ function VideoSection({ videoId }: { videoId: string }) {
       </div>
     </section>
   );
+}
+
+// ─── Main Video Section Wrapper ──────────────────────────────────────────────
+function VideoSection({ videoLink }: { videoLink: string }) {
+  if (!videoLink) return null;
+
+  if (videoLink.includes('instagram.com')) {
+    let postUrl = videoLink;
+    const match = videoLink.match(/(https?:\/\/(?:www\.)?instagram\.com\/(?:p|reel)\/[^\/?#&]+)/);
+    if (match) {
+      postUrl = match[1];
+    } else {
+      postUrl = videoLink.split('?')[0].replace(/\/embed\/?$/, '').replace(/\/?$/, '');
+    }
+    return <InstagramSection postUrl={postUrl} />;
+  }
+
+  // Otherwise treat as YouTube
+  let ytId = videoLink;
+  const ytMatch = videoLink.match(/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/);
+  if (ytMatch) {
+    ytId = ytMatch[1];
+  }
+  return <YoutubeSection videoId={ytId} />;
 }
 
 export default function WorkDetail() {
@@ -334,7 +407,7 @@ export default function WorkDetail() {
             alt={project.title}
             decoding="async"
             onLoad={() => debouncedScrollRefresh()}
-            className="w-full h-full object-cover grayscale brightness-50"
+            className="w-full h-full object-cover brightness-50"
           />
 
           <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-transparent to-transparent" />
@@ -432,7 +505,7 @@ export default function WorkDetail() {
                 loading="lazy"
                 decoding="async"
                 onLoad={() => debouncedScrollRefresh()}
-                className="w-full h-full object-cover grayscale"
+                className="w-full h-full object-cover"
               />
             </div>
           ))}
@@ -482,7 +555,7 @@ export default function WorkDetail() {
       </section>
 
       {/* Video Embed Section */}
-      <VideoSection videoId={project.video || 'JXHeS_GzJng'} />
+      {project.video && <VideoSection videoLink={project.video} />}
 
       {/* Footer / CTA */}
       <section className="py-32 md:py-60 px-4 text-center relative overflow-hidden">

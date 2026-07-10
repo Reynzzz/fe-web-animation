@@ -1,8 +1,8 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useMemo } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ArrowUpRight } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useSiteContent } from '@/context/SiteContentContext';
 import { resolveMediaUrl } from '@/lib/api';
 
@@ -29,13 +29,49 @@ function useIsMobile(breakpoint = MOBILE_BREAKPOINT) {
 export default function WorksSection() {
   const isMobile = useIsMobile();
   const { projects } = useSiteContent();
+  const navigate = useNavigate();
 
-  if (projects.length === 0) return null;
+  // Pick 5 random projects (stable per mount)
+  const displayProjects = useMemo(() => {
+    const shuffled = [...projects].sort(() => 0.5 - Math.random());
+    return shuffled.slice(0, 5);
+  }, [projects]);
 
-  return isMobile ? (
-    <WorksMobile projects={projects} />
-  ) : (
-    <WorksDesktop projects={projects} />
+  if (displayProjects.length === 0) return null;
+
+  return (
+    <>
+      {isMobile ? (
+        <WorksMobile projects={displayProjects} />
+      ) : (
+        <WorksDesktop projects={displayProjects} />
+      )}
+
+      {/* SEE ALL WORKS — appears after the card stack */}
+      <section className="bg-[#050505] relative overflow-hidden py-24 flex flex-col items-center justify-center">
+        {/* Aura that bleeds up from this section to visually connect with the stack above */}
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-[700px] h-[500px] bg-ayuta-primary/10 blur-[160px] rounded-full" />
+          <div className="absolute -bottom-20 right-[10%] w-[350px] h-[350px] bg-ayuta-pink/10 blur-[130px] rounded-full" />
+        </div>
+
+        {/* Label */}
+
+
+        {/* CTA Button */}
+        <button
+          onClick={() => navigate('/works')}
+          className="relative z-10 group flex items-center gap-3 bg-white text-black px-10 py-5 rounded-full font-bold text-sm md:text-base tracking-wide transition-all duration-300 hover:bg-ayuta-primary hover:text-white hover:scale-105 hover:shadow-[0_0_50px_rgba(147,51,234,0.4)]"
+        >
+          See All Works
+          <span className="flex items-center justify-center w-6 h-6 rounded-full bg-black/10 group-hover:bg-white/20 transition-colors duration-300">
+            <ArrowUpRight className="w-4 h-4 transition-transform duration-300 group-hover:rotate-45" />
+          </span>
+        </button>
+
+
+      </section>
+    </>
   );
 }
 
@@ -72,15 +108,8 @@ function WorksDesktop({ projects }: { projects: any[] }) {
         scrollTrigger: {
           trigger: containerRef.current,
           start: 'top top',
-          // Shorter total scroll distance per card means less physical
-          // scrolling is needed before a card change completes. Tune this
-          // multiplier directly: lower = cards change faster/sooner,
-          // higher = more scrolling needed per card.
           end: `+=${cards.length * 70}%`,
           pin: true,
-          // Lower scrub = animation tracks the scrollbar more directly
-          // (less lag), which combined with the shorter "end" above makes
-          // each card transition feel quicker to reach.
           scrub: 0.6,
           invalidateOnRefresh: true,
         },
@@ -94,17 +123,12 @@ function WorksDesktop({ projects }: { projects: any[] }) {
         const position = i * SLOT;
 
         if (i === 0) {
-          // Gentle parallax drift on the very first card while it waits
-          // for the next one to arrive.
           tl.to(
             img,
             { yPercent: -8, scale: 1.03, duration: SLOT, ease: 'none' },
             0
           );
         } else {
-          // Incoming card: settle into place with a soft, slightly
-          // overlapping choreography instead of one blanket easing curve
-          // applied to every property.
           tl.fromTo(
             card,
             {
@@ -157,9 +181,6 @@ function WorksDesktop({ projects }: { projects: any[] }) {
             position
           );
 
-          // Outgoing card: recede smoothly rather than dropping out fast.
-          // Spread across the full slot duration so the fade/blur tracks
-          // scroll position evenly instead of finishing early.
           tl.to(
             cards[i - 1],
             {
@@ -202,7 +223,7 @@ function WorksDesktop({ projects }: { projects: any[] }) {
 
       {/* TITLE */}
       <div className="absolute top-10 left-6 md:top-16 md:left-16 z-20">
-        <h2 className="text-[9px] md:text-[10px] uppercase tracking-[0.45em] text-ayuta-primary font-bold mb-3 md:mb-4">
+        <h2 className="text-[9px] md:text-[10px] uppercase tracking-[1.45em] text-ayuta-primary font-bold mb-3 md:mb-4">
           ARCHIVE OF CREATION
         </h2>
         <h3 className="text-4xl md:text-7xl lg:text-8xl font-display font-medium tracking-tighter text-[#F5F5F5] leading-[0.9]">
@@ -235,7 +256,7 @@ function WorksDesktop({ projects }: { projects: any[] }) {
           <Link
             to={`/works/${project.slug}`}
             key={project.id || project.slug || i}
-            className="work-card absolute w-[88%] md:w-[68%] h-[56vh] md:h-[62vh] rounded-[1.6rem] overflow-hidden border border-white/5 cinematic-shadow group interactive cursor-pointer pointer-events-auto bg-[#080808]"
+            className="work-card absolute w-[88%] md:w-[68%] h-[56vh] md:h-[65vh] rounded-[1.6rem] overflow-hidden border border-white/5 cinematic-shadow group interactive cursor-pointer pointer-events-auto bg-[#080808]"
             style={{
               zIndex: i + 10,
               opacity: i === 0 ? 1 : 0,
@@ -248,10 +269,9 @@ function WorksDesktop({ projects }: { projects: any[] }) {
                 alt={project.title}
                 loading="lazy"
                 decoding="async"
-                className="card-img w-full h-[120%] object-cover opacity-80 group-hover:scale-110 transition-transform duration-1000 pointer-events-none"
+                className=" w-full h-full object-cover opacity-80 group-hover:scale-110 transition-transform duration-1000 pointer-events-none"
               />
               <div className="card-overlay absolute inset-0 bg-gradient-to-t from-[#050505] via-black/25 to-transparent opacity-80 pointer-events-none transition-all duration-1000" />
-              <div className="absolute inset-0 bg-black/10 pointer-events-none" />
             </div>
 
             <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-black/40 backdrop-blur-[2px]">
@@ -330,7 +350,7 @@ function WorksMobile({ projects }: { projects: any[] }) {
         <h2 className="text-[9px] uppercase tracking-[0.45em] text-ayuta-primary font-bold mb-3">
           ARCHIVE OF CREATION
         </h2>
-        <h3 className="text-4xl font-display font-medium tracking-tighter text-[#F5F5F5] leading-[0.9]">
+        <h3 className="text-4xl font-display font-medium tracking-tighter text-[#F5F5F5] leading-[2]">
           SELECTED <br />
           <span className="italic font-light text-gradient-ayuta">WORKS</span>
         </h3>

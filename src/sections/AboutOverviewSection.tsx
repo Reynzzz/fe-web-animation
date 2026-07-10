@@ -10,7 +10,8 @@ gsap.registerPlugin(ScrollTrigger);
 
 function renderTitle(title: string, highlight?: string) {
   const renderLines = (text: string) => {
-    return text.split('\n').map((line, i, arr) => (
+    // Normalize literal \n (from admin textarea/JSON) to actual newlines
+    return text.replace(/\\n/g, '\n').split('\n').map((line, i, arr) => (
       <React.Fragment key={i}>
         {line}
         {i < arr.length - 1 && <br />}
@@ -92,7 +93,7 @@ export default function AboutSection() {
           <h2 className="text-[10px] uppercase tracking-[0.5em] text-ayuta-primary font-bold mb-8">
             {data.eyebrow}
           </h2>
-          <h3 className="text-5xl md:text-7xl font-display font-medium tracking-tight mb-10 text-white leading-[1.1] whitespace-pre-line">
+          <h3 className="text-5xl md:text-7xl font-display font-medium tracking-tight mb-10 text-white leading-[1.15]">
             {renderTitle(data.title, data.titleHighlight)}
           </h3>
           <p className="text-lg md:text-xl text-white/40 mb-12 leading-relaxed font-light">

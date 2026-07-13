@@ -31,8 +31,8 @@ const TriangleSVG = ({ className }: { className?: string }) => (
   </svg>
 );
 
-const AUTOPLAY_INTERVAL = 5000; // ms — advance one photo every 5s
-const RESUME_DELAY = 2500; // ms — pause autoplay this long after user interacts
+const AUTOPLAY_INTERVAL = 2500; // ms — advance one photo every 2.5s
+const RESUME_DELAY = 2000; // ms — pause autoplay this long after user interacts
 
 function MarqueeCarousel({
   members,
@@ -97,7 +97,7 @@ function MarqueeCarousel({
       tween.current?.kill();
       tween.current = gsap.to(xPos, {
         current: target,
-        duration: smooth ? 1.1 : 0,
+        duration: smooth ? 0.7 : 0,
         ease: "power3.inOut",
         onUpdate: () => {
           if (!marqueeRef.current) return;

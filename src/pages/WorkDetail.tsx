@@ -19,7 +19,7 @@ function InstagramSection({ postUrl }: { postUrl: string }) {
     script.src = "https://www.instagram.com/embed.js";
     script.async = true;
     document.body.appendChild(script);
-    
+
     script.onload = () => {
       if ((window as any).instgrm) {
         (window as any).instgrm.Embeds.process();
@@ -36,7 +36,7 @@ function InstagramSection({ postUrl }: { postUrl: string }) {
           </h4>
           <div className="flex-1 h-[1px] bg-white/10" />
         </div>
-        
+
         <div className="w-full flex justify-center bg-transparent">
           <blockquote
             className="instagram-media"
@@ -331,7 +331,7 @@ export default function WorkDetail() {
         debouncedScrollRefresh(200);
       }
     };
-    
+
     if (imgs.length > 0) {
       imgs.forEach(img => {
         if (img.complete) {
@@ -428,7 +428,7 @@ export default function WorkDetail() {
         </div>
 
         <div className="absolute bottom-8 left-6 right-6 md:bottom-12 md:left-12 md:right-12 flex justify-end items-end opacity-40 text-[8px] sm:text-[10px]">
-         
+
 
           <div className="uppercase tracking-[0.4em] font-bold">
             Client: {project.client}
@@ -527,11 +527,11 @@ export default function WorkDetail() {
         >
           <div className="min-w-[40vw] flex flex-col gap-8">
             <h4 className="text-[8vw] font-display font-bold text-white/40 tracking-tighter">
-              IN ACTION 
+              IN ACTION
             </h4>
 
             <p className="text-xl text-white/65 max-w-md whitespace-normal font-light">
-            From planning to execution, every frame tells part of the story.
+              {project.galleryCaption || 'From planning to execution, every frame tells part of the story.'}
             </p>
           </div>
 

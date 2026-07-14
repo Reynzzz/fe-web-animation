@@ -64,37 +64,43 @@ export default function PhilosophySection() {
                 transition={{ duration: 0.6, delay: 0.3 + (i * 0.1), ease: "easeOut" }}
                 className="group flex flex-col items-center gap-4"
               >
-                <div className="w-full aspect-square bg-[#1a1a1a] rounded-xl overflow-hidden relative border border-white/10 group-hover:border-ayuta-pink/50 transition-colors duration-500">
-                  {item.image ? (
-                    <img 
-                      src={resolveMediaUrl(item.image)} 
-                      alt={item.name} 
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 grayscale group-hover:grayscale-0"
-                    />
-                  ) : (
-                    <div className="absolute inset-0 flex items-center justify-center text-white/20 text-sm font-medium">
-                      Foto Brand
-                    </div>
-                  )}
-                  {/* Hover Overlay with IG & WA links */}
-                  <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center gap-3 backdrop-blur-sm pointer-events-none group-hover:pointer-events-auto">
-                    {item.linkIg && (
-                      <a href={item.linkIg} target="_blank" rel="noopener noreferrer" className="bg-white/10 hover:bg-white text-white hover:text-black px-6 py-2.5 rounded-full text-xs uppercase tracking-widest font-bold transition-all border border-white/20">
-                        Instagram
-                      </a>
+                {item.linkIg || item.linkWa ? (
+                  <a 
+                    href={item.linkIg || (item.linkWa.startsWith('http') ? item.linkWa : `https://wa.me/${item.linkWa.replace(/\\D/g, '')}`)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full aspect-square bg-[#1a1a1a] rounded-xl overflow-hidden relative border border-white/10 group-hover:border-ayuta-pink/50 transition-colors duration-500 block cursor-pointer"
+                  >
+                    {item.image ? (
+                      <img 
+                        src={resolveMediaUrl(item.image)} 
+                        alt={item.name} 
+                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 grayscale group-hover:grayscale-0"
+                      />
+                    ) : (
+                      <div className="absolute inset-0 flex items-center justify-center text-white/20 text-sm font-medium">
+                        Foto Brand
+                      </div>
                     )}
-                    {item.linkWa && (
-                      <a href={item.linkWa.startsWith('http') ? item.linkWa : `https://wa.me/${item.linkWa.replace(/\D/g, '')}`} target="_blank" rel="noopener noreferrer" className="bg-white/10 hover:bg-white text-white hover:text-black px-6 py-2.5 rounded-full text-xs uppercase tracking-widest font-bold transition-all border border-white/20">
-                        WhatsApp
-                      </a>
+                  </a>
+                ) : (
+                  <div className="w-full aspect-square bg-[#1a1a1a] rounded-xl overflow-hidden relative border border-white/10 group-hover:border-ayuta-pink/50 transition-colors duration-500">
+                    {item.image ? (
+                      <img 
+                        src={resolveMediaUrl(item.image)} 
+                        alt={item.name} 
+                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 grayscale group-hover:grayscale-0"
+                      />
+                    ) : (
+                      <div className="absolute inset-0 flex items-center justify-center text-white/20 text-sm font-medium">
+                        Foto Brand
+                      </div>
                     )}
                   </div>
-                </div>
+                )}
               
                 {/* Brand Name */}
-                <h3 className="text-xl md:text-2xl font-serif text-white/90 tracking-wide mt-1">
-                  {item.name}
-                </h3>
+               
               </motion.div>
             ))}
           </div>

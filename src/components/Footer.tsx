@@ -89,7 +89,7 @@ export default function Footer() {
 
                 <li>
                   <a
-                    href="https://youtube.com/@ayutasamarthya"
+                    href="https://youtube.com/@samayutaja"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="group flex items-start gap-2 text-white/80 hover:text-[#d154b8] transition-colors"

@@ -94,7 +94,7 @@ export default function Contact() {
 
               <div className="group">
                 <a 
-                  href="https://youtube.com/@ayutasamarthya" 
+                  href="https://youtube.com/@samayutaja" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="flex items-center gap-2 text-sm sm:text-base text-white/70 hover:text-white transition-colors group/link"

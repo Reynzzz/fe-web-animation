@@ -485,12 +485,9 @@ export default function WorkDetail() {
         {/* Mobile View: Vertical list of gallery images */}
         <div className="block md:hidden px-4 space-y-8">
           <div className="flex flex-col gap-4 mb-8">
-            <h4 className="text-4xl font-display font-bold text-white/40 tracking-tighter">
-              IN ACTION
-            </h4>
-            <p className="text-base text-white/65 font-light">
-              We explored various textures and motion patterns to ensure the
-              brand felt alive across all touchpoints.
+           
+            <p className="text-2xl sm:text-3xl md:text-5xl font-light leading-tight tracking-tight text-white/80 w-full">
+              {project.galleryCaption }
             </p>
           </div>
 
@@ -526,12 +523,10 @@ export default function WorkDetail() {
           className="hidden md:flex h-full items-center px-[10vw] gap-[5vw] whitespace-nowrap"
         >
           <div className="min-w-[40vw] flex flex-col gap-8">
-            <h4 className="text-[8vw] font-display font-bold text-white/40 tracking-tighter">
-              IN ACTION
-            </h4>
+          
 
-            <p className="text-xl text-white/65 max-w-md whitespace-normal font-light">
-              {project.galleryCaption || 'From planning to execution, every frame tells part of the story.'}
+            <p className="text-2xl sm:text-3xl md:text-5xl font-light leading-tight tracking-tight text-white/80 w-full whitespace-normal">
+              {project.galleryCaption }
             </p>
           </div>
 

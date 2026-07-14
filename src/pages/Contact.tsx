@@ -45,25 +45,72 @@ export default function Contact() {
   };
 
   return (
-    <main className="pt-32 pb-16 px-4 sm:px-6 min-h-screen">
-      <div className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-32">
+    <main className="pt-24 pb-8 px-4 sm:px-6 min-h-screen">
+      <div className="max-w-7xl mx-auto h-full flex items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center w-full">
           <div>
-            <h1 className="text-5xl sm:text-7xl md:text-9xl font-display font-bold tracking-tighter mb-8 md:mb-12">
+            <h1 className="text-5xl sm:text-7xl md:text-8xl font-display font-bold tracking-tighter mb-4 md:mb-6">
               GET IN<br /> <span className="text-ayuta-pink">TOUCH.</span>
             </h1>
-            <p className="text-lg sm:text-2xl text-white/50 font-light mb-10 md:mb-16 leading-relaxed">
+            <p className="text-base sm:text-xl text-white/50 font-light mb-6 md:mb-8 leading-relaxed">
          Let’s collaborate to ignite deep, authentic connections through emotionally engaging experiences.
-
             </p>
 
-       
+            <div className="grid grid-cols-2 gap-x-6 gap-y-6 mt-8 pt-6 border-t border-white/10">
+              <div className="group">
+                <h4 className="text-[10px] font-bold tracking-widest text-ayuta-pink uppercase mb-1.5 opacity-80 group-hover:opacity-100 transition-opacity">WhatsApp</h4>
+                <a 
+                  href="https://wa.me/6285773672611" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-sm sm:text-base text-white/70 hover:text-white transition-colors"
+                >
+                  0857-7367-2611
+                </a>
+              </div>
+              
+              <div className="group">
+                <h4 className="text-[10px] font-bold tracking-widest text-ayuta-pink uppercase mb-1.5 opacity-80 group-hover:opacity-100 transition-opacity">Instagram</h4>
+                <a 
+                  href="https://instagram.com/ayuta.id" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-sm sm:text-base text-white/70 hover:text-white transition-colors"
+                >
+                  @ayuta.id
+                </a>
+              </div>
+
+              <div className="group">
+                <h4 className="text-[10px] font-bold tracking-widest text-ayuta-pink uppercase mb-1.5 opacity-80 group-hover:opacity-100 transition-opacity">YouTube</h4>
+                <a 
+                  href="https://youtube.com/@ayutasamarthya" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-sm sm:text-base text-white/70 hover:text-white transition-colors"
+                >
+                  ayutasamarthya
+                </a>
+              </div>
+
+              <div className="group">
+                <h4 className="text-[10px] font-bold tracking-widest text-ayuta-pink uppercase mb-1.5 opacity-80 group-hover:opacity-100 transition-opacity">LinkedIn</h4>
+                <a 
+                  href="https://linkedin.com/company/ayuta-samarthya" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-sm sm:text-base text-white/70 hover:text-white transition-colors"
+                >
+                  Ayuta Samarthya
+                </a>
+              </div>
+            </div>
           </div>
 
-          <div className="glass-panel p-6 sm:p-12 rounded-[1.5rem] sm:rounded-[2rem] relative">
+          <div className="glass-panel p-6 sm:p-8 rounded-[1.5rem] sm:rounded-[2rem] relative">
             <div className="absolute -top-10 -right-10 w-40 h-40 bg-ayuta-pink/20 blur-3xl rounded-full" />
 
-            <form className="space-y-6 sm:space-y-8" onSubmit={handleSubmit}>
+            <form className="space-y-4 sm:space-y-5" onSubmit={handleSubmit}>
               {status === 'success' && (
                 <div className="bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 p-4 rounded-xl flex items-center gap-3 text-sm">
                   <CheckCircle className="w-5 h-5 flex-shrink-0" />

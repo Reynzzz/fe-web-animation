@@ -106,9 +106,7 @@ export default function AboutSection() {
                 <span className="text-[9px] uppercase tracking-[0.3em] text-white/30">{stat.label}</span>
               </div>
             ))}
-            <MagneticButton className="ml-auto">
-              Our Story <ArrowRight className="w-4 h-4 ml-2" />
-            </MagneticButton>
+          
           </div>
         </div>
 

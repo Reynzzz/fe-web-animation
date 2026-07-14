@@ -69,7 +69,6 @@ export default function Contact() {
 
             <div className="grid grid-cols-2 gap-x-6 gap-y-6 mt-8 pt-6 border-t border-white/10">
               <div className="group">
-                <h4 className="text-[10px] font-bold tracking-widest text-ayuta-pink uppercase mb-2 opacity-80 group-hover:opacity-100 transition-opacity">WhatsApp</h4>
                 <a 
                   href="https://wa.me/6285773672611" 
                   target="_blank" 
@@ -82,7 +81,6 @@ export default function Contact() {
               </div>
               
               <div className="group">
-                <h4 className="text-[10px] font-bold tracking-widest text-ayuta-pink uppercase mb-2 opacity-80 group-hover:opacity-100 transition-opacity">Instagram</h4>
                 <a 
                   href="https://instagram.com/ayuta.id" 
                   target="_blank" 
@@ -95,7 +93,6 @@ export default function Contact() {
               </div>
 
               <div className="group">
-                <h4 className="text-[10px] font-bold tracking-widest text-ayuta-pink uppercase mb-2 opacity-80 group-hover:opacity-100 transition-opacity">YouTube</h4>
                 <a 
                   href="https://youtube.com/@ayutasamarthya" 
                   target="_blank" 
@@ -108,7 +105,6 @@ export default function Contact() {
               </div>
 
               <div className="group">
-                <h4 className="text-[10px] font-bold tracking-widest text-ayuta-pink uppercase mb-2 opacity-80 group-hover:opacity-100 transition-opacity">LinkedIn</h4>
                 <a 
                   href="https://linkedin.com/company/ayuta-samarthya" 
                   target="_blank" 

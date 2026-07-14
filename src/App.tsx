@@ -1,4 +1,4 @@
-  import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+  import { BrowserRouter as Router, Routes, Route, useLocation, Navigate } from 'react-router-dom';
   import { AnimatePresence } from 'motion/react';
   import { Suspense, lazy } from 'react';
   import Layout from './components/Layout';
@@ -37,6 +37,7 @@
             <Route path="about" element={<About />} />
             <Route path="services" element={<Services />} />
             <Route path="contact" element={<Contact />} />
+            <Route path="*" element={<Navigate to="/" replace />} />
           </Route>
         </Routes>
       </Suspense>

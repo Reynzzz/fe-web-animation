@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'motion/react';
 import { useSiteContent } from '@/context/SiteContentContext';
 import { resolveMediaUrl } from '@/lib/api';
+import { Instagram, MessageCircle } from 'lucide-react';
 
 const brandNames = [
   "Baitee Park",
@@ -16,7 +17,7 @@ export default function PhilosophySection() {
   const philosophyItems = items.philosophy || [];
 
   // Pull up to 3 items from the CMS
-  const displayItems = philosophyItems.slice(0, 3).map((item: any, idx: number) => ({
+  const displayItems = philosophyItems.map((item: any, idx: number) => ({
     id: item.id || `brand-${idx}`,
     name: item.subtitle || `-`,
     linkIg: item.title || '',
@@ -65,31 +66,54 @@ export default function PhilosophySection() {
                 className="group flex flex-col items-center gap-4"
               >
                 {item.linkIg || item.linkWa ? (
-                  <a 
-                    href={item.linkIg || (item.linkWa.startsWith('http') ? item.linkWa : `https://wa.me/${item.linkWa.replace(/\\D/g, '')}`)}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-full aspect-square bg-[#1a1a1a] rounded-xl overflow-hidden relative border border-white/10 group-hover:border-ayuta-pink/50 transition-colors duration-500 block cursor-pointer"
+                  <div 
+                    className="w-full aspect-square bg-[#1a1a1a] rounded-xl overflow-hidden relative border border-white/10 group-hover:border-ayuta-pink/50 transition-colors duration-500 block"
                   >
                     {item.image ? (
                       <img 
                         src={resolveMediaUrl(item.image)} 
                         alt={item.name} 
-                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 grayscale group-hover:grayscale-0"
+                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 grayscale-0 md:grayscale group-hover:grayscale-0"
                       />
                     ) : (
                       <div className="absolute inset-0 flex items-center justify-center text-white/20 text-sm font-medium">
                         Foto Brand
                       </div>
                     )}
-                  </a>
+
+                    {/* Gradient Overlay for Links */}
+                    <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent flex justify-center gap-4 opacity-100 md:opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      {item.linkIg && (
+                        <a 
+                          href={item.linkIg}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="w-10 h-10 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center text-white hover:bg-ayuta-pink hover:text-white hover:border-ayuta-pink transition-all duration-300 transform hover:scale-110"
+                          title="Instagram"
+                        >
+                          <Instagram size={18} />
+                        </a>
+                      )}
+                      {item.linkWa && (
+                        <a 
+                          href={item.linkWa.startsWith('http') ? item.linkWa : `https://wa.me/${item.linkWa.replace(/\\D/g, '')}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="w-10 h-10 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center text-white hover:bg-[#25D366] hover:text-white hover:border-[#25D366] transition-all duration-300 transform hover:scale-110"
+                          title="WhatsApp"
+                        >
+                          <MessageCircle size={18} />
+                        </a>
+                      )}
+                    </div>
+                  </div>
                 ) : (
                   <div className="w-full aspect-square bg-[#1a1a1a] rounded-xl overflow-hidden relative border border-white/10 group-hover:border-ayuta-pink/50 transition-colors duration-500">
                     {item.image ? (
                       <img 
                         src={resolveMediaUrl(item.image)} 
                         alt={item.name} 
-                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 grayscale group-hover:grayscale-0"
+                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 grayscale-0 md:grayscale group-hover:grayscale-0"
                       />
                     ) : (
                       <div className="absolute inset-0 flex items-center justify-center text-white/20 text-sm font-medium">

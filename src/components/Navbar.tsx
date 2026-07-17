@@ -86,9 +86,7 @@ export default function Navbar() {
               animate={{ opacity: 1 }}
               transition={{ delay: 0.8 }}
             >
-              <span>INSTA</span>
-              <span>TWIT</span>
-              <span>LINKD</span>
+             
             </motion.div>
           </motion.div>
         )}

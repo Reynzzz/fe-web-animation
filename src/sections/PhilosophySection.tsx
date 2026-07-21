@@ -2,7 +2,7 @@ import React from 'react';
 import { motion } from 'motion/react';
 import { useSiteContent } from '@/context/SiteContentContext';
 import { resolveMediaUrl } from '@/lib/api';
-import { Instagram, MessageCircle } from 'lucide-react';
+import { Instagram, MessageCircle, Globe } from 'lucide-react';
 
 const brandNames = [
   "Baitee Park",
@@ -89,9 +89,9 @@ export default function PhilosophySection() {
                           target="_blank"
                           rel="noopener noreferrer"
                           className="w-10 h-10 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center text-white hover:bg-ayuta-pink hover:text-white hover:border-ayuta-pink transition-all duration-300 transform hover:scale-110"
-                          title="Instagram"
+                          title={item.linkIg.toLowerCase().includes('instagram') ? "Instagram" : "Website"}
                         >
-                          <Instagram size={18} />
+                          {item.linkIg.toLowerCase().includes('instagram') ? <Instagram size={18} /> : <Globe size={18} />}
                         </a>
                       )}
                       {item.linkWa && (
